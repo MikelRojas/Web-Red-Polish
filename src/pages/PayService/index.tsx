@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import NavBar from '../../common/NavBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,6 +10,7 @@ const PayService = () => {
   const location = useLocation();
   const { servicio, fechaSeleccionada } = location.state || {};
   const { user ,token, setIdTrans } = useAuth();
+  const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_IP_API;
   const { t } = useTranslation('global');
 
@@ -57,6 +58,7 @@ const PayService = () => {
       const mensaje = `Hola, deseo pagar por SINPE móvil el servicio que reservé. Mi correo es: ${user.email}, Monto a pagar: ${servicio.precio} dólares.`;
       const mensajeCodificado = encodeURIComponent(mensaje);
       const whatsappUrl = `https://wa.me/50683582929?text=${mensajeCodificado}`;
+      navigate('/');
       window.location.href = whatsappUrl;
     } catch (error: any) {
   console.error('❌ Error al registrar pago por SINPE:', error);

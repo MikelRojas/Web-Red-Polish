@@ -58,7 +58,7 @@ const Appoiment = () => {
 
   const handleConfirm = async (citaId: number): Promise<boolean> => {
     try {
-      const response = await fetch(`${apiUrl}/api/citas/update-state/${citaId}/${user.email}/CONFIRMADA`, {
+      const response = await fetch(`${apiUrl}/api/payments/sinpe/confirm/cita/${citaId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -96,14 +96,7 @@ const Appoiment = () => {
       });
 
       if (!response.ok) return false;
-
-      const updated = await response.json();
-      setAppointments(prev =>
-          prev.map(cita =>
-              cita.id === updated.id ? { ...cita, state: updated.state } : cita
-          )
-      );
-
+      window.location.reload();
       return true;
     } catch (err) {
       console.error(err);
@@ -149,7 +142,11 @@ const Appoiment = () => {
                                 async () => {
                                   const success = await handleConfirm(cita.id);
                                   if (success) {
-                                    showAlert('Éxito', 'La cita ha sido confirmada exitosamente.');
+                                    showAlert(
+                                      'Éxito',
+                                      'La cita ha sido confirmada exitosamente.',
+                                      () => window.location.reload()
+                                    );
                                   } else {
                                     showAlert('Error', 'No se pudo confirmar la cita.');
                                   }

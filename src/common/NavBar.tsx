@@ -35,8 +35,8 @@ const NavBar = () => {
         {user && user.rol !== 'Administrador' && (
           <Link
             to="/shopping-cart"
-            className="d-lg-none nav-link p-0 me-3"
-            style={{ width: '30px', height: '30px' }}
+            className="d-lg-none nav-link p-0 me-2"
+            style={{ width: '20px', height: '20px' }}
           >
             <img src={carritoIcon} alt="Carrito" className="img-fluid" />
           </Link>

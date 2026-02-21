@@ -59,8 +59,8 @@ const PayProduct = () => {
       const mensaje = `Hola, deseo pagar por SINPE móvil los productos que compré en la página. Mi correo es: ${user.email}, Monto a Pagar es: ${total} dolares`;
       const mensajeCodificado = encodeURIComponent(mensaje);
       const whatsappUrl = `https://wa.me/50683582929?text=${mensajeCodificado}`;
+      navigate('/');
       window.location.href = whatsappUrl;
-      navigate('/catalog');
 
     } catch (error) {
       console.error('Error al registrar pago por SINPE:', error);
