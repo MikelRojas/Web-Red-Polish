@@ -27,7 +27,7 @@ Red Polish es una plataforma digital híbrida que combina:
 
 - 🛍 **E-commerce tradicional**
 - 👤 **Reserva de servicios con control de disponibilidad**
-- 💳 **Pasarela de pagos múltiples**
+- 💳 **Pasarela de pagos**
 - 🔐 **Autenticación segura basada en JWT**
 - 🎯 **Sistema dinámico de promociones**
 - 🌎 **Internacionalización**
@@ -42,6 +42,61 @@ El proyecto fue desarrollado con mentalidad de <strong>producto real</strong>, a
 - DTO Pattern  
 - Seguridad empresarial  
 - Escalabilidad futura  
+
+---
+
+# 🧩 Backend Architecture
+
+Arquitectura diseñada bajo principios **SOLID** y separación estricta por capas, garantizando escalabilidad, mantenibilidad y claridad estructural.
+
+<p align="center">
+Spring Boot API • Clean Layered Architecture • DTO Pattern
+</p>
+
+---
+
+## 📐 Layered Structure
+
+Controller
+↓
+Service
+↓
+ServiceImpl
+↓
+Repository
+↓
+Entity
+
+
+### Supporting Layers
+
+- DTO (Data Transfer Objects)  
+- Mapper (Entity ↔ DTO transformation)  
+- Config (Security & Application Configuration)  
+- Exception (Centralized Error Handling)  
+
+---
+
+## 🎯 Architectural Benefits
+
+- Bajo acoplamiento entre capas  
+- Alta mantenibilidad  
+- Escalabilidad horizontal y vertical  
+- Separación clara de responsabilidades  
+- Preparado para testing estructurado  
+- Base sólida para evolución a microservicios  
+
+---
+
+## 🔗 Backend Repository
+
+El código fuente completo del backend puede consultarse aquí:
+
+<p align="center">
+  <a href="https://github.com/MikelRojas/Red-Polish-backend.git">
+    🔗 View Backend Repository
+  </a>
+</p>
 
 ---
 
@@ -281,31 +336,6 @@ Permite control financiero básico sin requerir dashboard externo.
   <img src="public/readme/history_buys.png" height="380"/>
 </p>
 
----
-
-# 🧩 Backend Architecture Design
-
-Separación por capas siguiendo principios SOLID:
-
-Controller
-Service
-ServiceImpl
-Repository
-Entity
-DTO
-Mapper
-Config
-Exception
-
-
-### Beneficios
-
-- Bajo acoplamiento  
-- Alta mantenibilidad  
-- Escalabilidad 
-- Claridad en responsabilidades  
-
----
 
 # 📈 Escalabilidad y Proyección
 
