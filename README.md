@@ -45,6 +45,46 @@ El proyecto fue desarrollado con mentalidad de <strong>producto real</strong>, a
 
 ---
 
+# 🏗 Arquitectura de Alto Nivel
+
+<p align="center">
+  <strong>React + TypeScript (SPA)</strong><br/>
+  ↓<br/>
+  <strong>REST API</strong><br/>
+  ↓<br/>
+  <strong>Spring Boot (Security + Business Logic)</strong><br/>
+  ↓<br/>
+  <strong>PostgreSQL</strong>
+</p>
+
+---
+
+## 🔎 Stack Tecnológico
+
+| Capa | Tecnología | Rol |
+|------|------------|------|
+| Frontend | React + Vite + TypeScript | SPA optimizada |
+| Backend | Spring Boot | API REST robusta |
+| Seguridad | Spring Security + JWT | Autenticación stateless |
+| Base de Datos | PostgreSQL | Persistencia relacional |
+| Pagos | SINPE | Procesamiento financiero |
+| i18n | i18next | Soporte multi-idioma |
+
+---
+
+# 🔐 Seguridad Empresarial
+
+Implementación basada en estándares modernos:
+
+- Autenticación stateless con JWT  
+- Filtros personalizados (`JwtAuthFilter`)  
+- Encriptación con BCrypt  
+- Protección de rutas privadas  
+- Control de acceso por roles  
+- Recuperación de contraseña vía email   
+
+---
+
 # 🧩 Backend Architecture
 
 Arquitectura diseñada bajo principios **SOLID** y separación estricta por capas, garantizando escalabilidad, mantenibilidad y claridad estructural.
@@ -97,46 +137,6 @@ El código fuente completo del backend puede consultarse aquí:
     🔗 View Backend Repository
   </a>
 </p>
-
----
-
-# 🏗 Arquitectura de Alto Nivel
-
-<p align="center">
-  <strong>React + TypeScript (SPA)</strong><br/>
-  ↓<br/>
-  <strong>REST API</strong><br/>
-  ↓<br/>
-  <strong>Spring Boot (Security + Business Logic)</strong><br/>
-  ↓<br/>
-  <strong>PostgreSQL</strong>
-</p>
-
----
-
-## 🔎 Stack Tecnológico
-
-| Capa | Tecnología | Rol |
-|------|------------|------|
-| Frontend | React + Vite + TypeScript | SPA optimizada |
-| Backend | Spring Boot | API REST robusta |
-| Seguridad | Spring Security + JWT | Autenticación stateless |
-| Base de Datos | PostgreSQL | Persistencia relacional |
-| Pagos | SINPE | Procesamiento financiero |
-| i18n | i18next | Soporte multi-idioma |
-
----
-
-# 🔐 Seguridad Empresarial
-
-Implementación basada en estándares modernos:
-
-- Autenticación stateless con JWT  
-- Filtros personalizados (`JwtAuthFilter`)  
-- Encriptación con BCrypt  
-- Protección de rutas privadas  
-- Control de acceso por roles  
-- Recuperación de contraseña vía email   
 
 ---
 
