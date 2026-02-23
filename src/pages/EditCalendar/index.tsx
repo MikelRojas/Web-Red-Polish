@@ -55,7 +55,6 @@ const EditCalendar = () => {
   }
 
   useEffect(() => {
-    document.body.style.backgroundColor = '#ffffff'
 
     const fetchHorasOcupadas = async () => {
       if (!selectedDate) return
@@ -132,41 +131,109 @@ const EditCalendar = () => {
   return (
     <>
       <NavBar />
-      <div className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-50" style={{ zIndex: 1000 }}>
-        <div className="bg-white rounded-4 shadow-lg p-5 w-100" style={{ maxWidth: '500px' }}>
-          <h2 className="text-center mb-4 text-dark fw-bold">{t('title_calendar')}</h2>
-
-          {saved && <div className="alert alert-success">{t('saved')}</div>}
-
-          <div className="mb-3">
-            <label className="text-primary fw-bold">{t('select_date_c')}</label>
+  
+      <div
+        className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center px-3"
+        style={{
+          background: 'rgba(0,0,0,0.75)',
+          backdropFilter: 'blur(4px)',
+          zIndex: 1000
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: '#141414',
+            borderRadius: '18px',
+            padding: 'clamp(25px, 5vw, 40px)',
+            width: '100%',
+            maxWidth: '520px',
+            border: '1px solid #2a2a2a',
+            boxShadow: '0 20px 50px rgba(0,0,0,0.6)'
+          }}
+        >
+          <h2 className="text-center mb-4 fw-bold" style={{ color: '#ffffff' }}>
+            {t('title_calendar')}
+          </h2>
+  
+          {saved && (
+            <div
+              style={{
+                backgroundColor: '#1f1f1f',
+                color: '#4ade80',
+                padding: '10px',
+                borderRadius: '8px',
+                border: '1px solid #333',
+                textAlign: 'center',
+                marginBottom: '15px'
+              }}
+            >
+              {t('saved')}
+            </div>
+          )}
+  
+          {/* Date Picker */}
+          <div className="mb-4">
+            <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+              {t('select_date_c')}
+            </label>
+  
             <DatePicker
               selected={selectedDate}
               onChange={date => {
                 setSelectedDate(date)
-                setSelectedHours([]) // limpiar horas si cambia el día
+                setSelectedHours([])
               }}
               dateFormat="yyyy-MM-dd"
               minDate={new Date()}
               className="form-control"
               placeholderText="Haz clic para elegir una fecha"
+              style={{
+                backgroundColor: '#1a1a1a',
+                border: '1px solid #333',
+                color: '#fff'
+              }}
             />
           </div>
-
+  
+          {/* Hours */}
           {selectedDate && (
             <div className="mb-4">
-              <label className="text-dark">{t('available_hours')}</label>
-              <div className="d-flex flex-wrap gap-2 mt-2">
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('available_hours')}
+              </label>
+  
+              <div className="d-flex flex-wrap gap-2 mt-3">
                 {hours.map(hour => {
                   const ocupado = isHoraOcupada(hour)
                   const selected = selectedHours.includes(hour)
+  
                   return (
                     <button
                       key={hour}
                       type="button"
-                      className={`btn btn-sm ${ocupado ? 'btn-secondary disabled' : selected ? 'btn-primary' : 'btn-outline-primary'}`}
                       onClick={() => !ocupado && handleHourToggle(hour)}
                       disabled={ocupado}
+                      style={{
+                        backgroundColor: ocupado
+                          ? '#2a2a2a'
+                          : selected
+                          ? '#8B0000'
+                          : 'transparent',
+                        border: ocupado
+                          ? '1px solid #333'
+                          : selected
+                          ? '1px solid #8B0000'
+                          : '1px solid #444',
+                        color: ocupado
+                          ? '#666'
+                          : selected
+                          ? '#fff'
+                          : '#ddd',
+                        borderRadius: '8px',
+                        padding: '6px 14px',
+                        cursor: ocupado ? 'not-allowed' : 'pointer',
+                        transition: 'all 0.2s ease'
+                      }}
                     >
                       {hour}:00
                     </button>
@@ -175,30 +242,54 @@ const EditCalendar = () => {
               </div>
             </div>
           )}
-
-          <button onClick={handleSave} className="btn btn-primary w-100 fw-bold mb-3">
+  
+          {/* Save Button */}
+          <button
+            onClick={handleSave}
+            style={{
+              backgroundColor: '#8B0000',
+              border: 'none',
+              borderRadius: '12px',
+              padding: '12px',
+              width: '100%',
+              fontWeight: 600,
+              color: '#fff',
+              marginBottom: '15px'
+            }}
+          >
             {t('save_c')}
           </button>
-
+  
+          {/* Cancel */}
           <div className="text-center">
-            <button className="btn btn-outline-dark btn-sm" onClick={() => navigate('/services')}>
+            <button
+              onClick={() => navigate('/services')}
+              style={{
+                background: 'transparent',
+                border: '1px solid #333',
+                color: '#ccc',
+                borderRadius: '8px',
+                padding: '6px 18px'
+              }}
+            >
               {t('cancel_add')}
             </button>
           </div>
         </div>
+  
         {modalInfo.show && (
-        <PopUpWindow
-          show={modalInfo.show}
-          title={modalInfo.title}
-          onClose={() => setModalInfo({ ...modalInfo, show: false })}
-          onConfirm={() => {
-            setModalInfo({ ...modalInfo, show: false });
-            if (modalInfo.onConfirm) modalInfo.onConfirm();
-          }}
-        >
-          <p>{modalInfo.content}</p>
-        </PopUpWindow>
-      )}
+          <PopUpWindow
+            show={modalInfo.show}
+            title={modalInfo.title}
+            onClose={() => setModalInfo({ ...modalInfo, show: false })}
+            onConfirm={() => {
+              setModalInfo({ ...modalInfo, show: false })
+              if (modalInfo.onConfirm) modalInfo.onConfirm()
+            }}
+          >
+            <p>{modalInfo.content}</p>
+          </PopUpWindow>
+        )}
       </div>
     </>
   )

@@ -13,6 +13,7 @@ const UserManagement = () => {
   const apiUrl = import.meta.env.VITE_IP_API;
 
   const [firstName, setFirstName] = useState(user?.name || '')
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [correoPromoStatus, setCorreoPromoStatus] = useState<'success' | 'error' | null>(null)
   const [lastName, setLastName] = useState(user?.last_name || '')
   const [password, setPassword] = useState('')
@@ -394,74 +395,213 @@ const confirmarCompra = async (idCompra: number) => {
 
 };
 
-   return (
-    <>
-      <NavBar />
-      <div className="container-fluid d-flex" style={{ minHeight: '100vh' }}>
-        <div className="p-4" style={{ width: '250px', minHeight: '100%', backgroundColor: '#f1f1f1' }}>
-          <h4 className="fw-bold mb-4 text-dark">{t('profile')}</h4>
-            <li className="nav-item mb-2">
-              <button className={`btn btn-sm w-100 text-start ${activeSection === 'info' ? 'btn-light text-dark fw-bold' : 'btn-outline-secondary text-dark'}`} onClick={() => setActiveSection('info')}>{t('info')}</button>
-            </li>
-            <li className="nav-item mb-2">
-              <button
-                className={`btn btn-sm w-100 text-start ${activeSection === 'citas' ? 'btn-light text-dark fw-bold' : 'btn-outline-secondary text-dark'}`}
-                onClick={() => setActiveSection('citas')}
-              >
-                {user?.rol === 'Administrador' ? t('appointments') : t('my_appointments')}
-              </button>
-            </li>
-            <li className="nav-item mb-2">
-              <button className={`btn btn-sm w-100 text-start ${activeSection === 'gestion' ? 'btn-light text-dark fw-bold' : 'btn-outline-secondary text-dark'}`} onClick={() => setActiveSection('gestion')}>{t('user_management')}</button>
-            </li>
+return (
+  <>
+    <NavBar />
+
+    <div className="container-fluid p-0">
+      <div
+        className="row g-0"
+        style={{ minHeight: '100vh', backgroundColor: '#f4f5f7' }}
+      >
+        {/* Botón hamburguesa móvil */}
+        <div className="d-md-none p-3">
+          <button
+            className="btn btn-dark w-100"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            ☰ {t('menu')}
+          </button>
+        </div>
+
+        {/* Sidebar Responsive */}
+        <div
+          className={`
+            col-12 col-md-auto
+            ${isMobileMenuOpen ? 'd-block' : 'd-none'}
+            d-md-block
+          `}
+          style={{
+            width: '260px',
+            backgroundColor: '#111111',
+            color: '#ffffff',
+          }}
+        >
+          <div className="p-4 d-flex flex-column">
+
+            <h4 className="fw-bold mb-4">{t('profile')}</h4>
+
+            {/* INFO */}
+            <button
+              className="btn btn-sm w-100 text-start mb-2"
+              style={{
+                backgroundColor: activeSection === 'info' ? '#7a0c0c' : 'transparent',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '8px'
+              }}
+              onClick={() => {
+                setActiveSection('info')
+                setIsMobileMenuOpen(false)
+              }}
+            >
+              {t('info')}
+            </button>
+
+            {/* CITAS */}
+            <button
+              className="btn btn-sm w-100 text-start mb-2"
+              style={{
+                backgroundColor: activeSection === 'citas' ? '#7a0c0c' : 'transparent',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '8px'
+              }}
+              onClick={() => {
+                setActiveSection('citas')
+                setIsMobileMenuOpen(false)
+              }}
+            >
+              {user?.rol === 'Administrador'
+                ? t('appointments')
+                : t('my_appointments')}
+            </button>
+
+            {/* GESTION */}
+            <button
+              className="btn btn-sm w-100 text-start mb-2"
+              style={{
+                backgroundColor: activeSection === 'gestion' ? '#7a0c0c' : 'transparent',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '8px'
+              }}
+              onClick={() => {
+                setActiveSection('gestion')
+                setIsMobileMenuOpen(false)
+              }}
+            >
+              {t('user_management')}
+            </button>
+
+            {/* PROMOS ADMIN */}
             {user?.rol === 'Administrador' && (
-              <li className="nav-item mb-2">
-                <button className={`btn btn-sm w-100 text-start ${activeSection === 'promos' ? 'btn-light text-dark fw-bold' : 'btn-outline-secondary text-dark'}`} onClick={() => setActiveSection('promos')}>{t('promotions')}</button>
-              </li>
-            )}
-            <li className="nav-item mb-2">
-              <button className={`btn btn-sm w-100 text-start ${activeSection === 'ventas' ? 'btn-light text-dark fw-bold' : 'btn-outline-secondary text-dark'}`} onClick={() => setActiveSection('ventas')}>{user?.rol === 'Administrador' ? t('purchase_history') : t('my_purchase_history')}</button>
-            </li>
-            {user?.rol !== 'Administrador' && (
-            <li className="nav-item mb-2">
               <button
-                className={`btn btn-sm w-100 text-start ${activeSection === 'promosActivas' ? 'btn-light text-dark fw-bold' : 'btn-outline-secondary text-dark'}`}
-                onClick={() => setActiveSection('promosActivas')}
+                className="btn btn-sm w-100 text-start mb-2"
+                style={{
+                  backgroundColor: activeSection === 'promos' ? '#7a0c0c' : 'transparent',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '8px'
+                }}
+                onClick={() => {
+                  setActiveSection('promos')
+                  setIsMobileMenuOpen(false)
+                }}
+              >
+                {t('promotions')}
+              </button>
+            )}
+
+            {/* VENTAS */}
+            <button
+              className="btn btn-sm w-100 text-start mb-2"
+              style={{
+                backgroundColor: activeSection === 'ventas' ? '#7a0c0c' : 'transparent',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '8px'
+              }}
+              onClick={() => {
+                setActiveSection('ventas')
+                setIsMobileMenuOpen(false)
+              }}
+            >
+              {user?.rol === 'Administrador'
+                ? t('purchase_history')
+                : t('my_purchase_history')}
+            </button>
+
+            {/* PROMOS ACTIVAS CLIENTE */}
+            {user?.rol !== 'Administrador' && (
+              <button
+                className="btn btn-sm w-100 text-start mb-2"
+                style={{
+                  backgroundColor: activeSection === 'promosActivas' ? '#7a0c0c' : 'transparent',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '8px'
+                }}
+                onClick={() => {
+                  setActiveSection('promosActivas')
+                  setIsMobileMenuOpen(false)
+                }}
               >
                 {t('active_promotions')}
               </button>
-            </li>
-          )}
-          {user?.rol !== 'Administrador' && (
-          <li className="nav-item mb-2">
-            <button
-              className={`btn btn-sm w-100 text-start ${activeSection === 'notificaciones' ? 'btn-light text-dark fw-bold' : 'btn-outline-secondary text-dark'}`}
-              onClick={() => {
-                setActiveSection('notificaciones');
-                setTieneNotificacion(false);
-              }}
-            >
-              {t('notifications')}
-              {tieneNotificacion && <span className="badge bg-danger ms-2">{t('new_notification')}</span>}
-            </button>
-          </li>
-        )}
+            )}
+
+            {/* NOTIFICACIONES */}
+            {user?.rol !== 'Administrador' && (
+              <button
+                className="btn btn-sm w-100 text-start mb-2"
+                style={{
+                  backgroundColor: activeSection === 'notificaciones' ? '#7a0c0c' : 'transparent',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '8px'
+                }}
+                onClick={() => {
+                  setActiveSection('notificaciones')
+                  setTieneNotificacion(false)
+                  setIsMobileMenuOpen(false)
+                }}
+              >
+                {t('notifications')}
+                {tieneNotificacion && (
+                  <span
+                    className="badge ms-2"
+                    style={{
+                      backgroundColor: '#7a0c0c',
+                      color: '#fff'
+                    }}
+                  >
+                    {t('new_notification')}
+                  </span>
+                )}
+              </button>
+            )}
+          </div>
         </div>
 
-        <div className="flex-grow-1 p-5">
-          {activeSection === 'info' && (
+        {/* CONTENIDO */}
+        <div className="col p-4 p-md-5" style={{ backgroundColor: '#f9fafb' }}>
+
+        {activeSection === 'info' && (
             <>
-              <h2 className="fw-bold mb-4" style={{ color: '#333' }}>{t('user_info_title')}</h2>
+              <h2 
+                className="fw-bold mb-4"
+                style={{ 
+                  color: '#1a1a1a',
+                  letterSpacing: '0.5px'
+                }}
+              >{t('user_info_title')}</h2>
               <div className="fw-bold mb-4" style={{ color: '#333' }}>{t('user_name')}{user?.name}</div>
               <div className="fw-bold mb-4" style={{ color: '#333' }}>{t('user_last_name')}{user?.last_name}</div>
               <div className="fw-bold mb-4" style={{ color: '#333' }}>{t('user_email')}{user?.email}</div>
             </>
           )}
 
-        {activeSection === 'citas' && <MostrarCitas />}
+          {activeSection === 'citas' && <MostrarCitas />}
         
           {activeSection === 'gestion' && (
-            <div className="bg-light p-4 rounded-4 shadow" style={{ border: '2px solid #ccc', maxWidth: '600px' }}>
+            <div 
+              className="p-5 rounded-4 shadow-sm bg-white"
+              style={{ 
+                maxWidth: '650px',
+                border: '1px solid #e5e5e5'
+              }}
+            >
               <h2 className="fw-bold mb-4" style={{ color: '#333' }}>{t('user_management')}</h2>
               {error && <div className="alert alert-danger">{error}</div>}
               {success && <div className="alert alert-success">{t('update_success')}</div>}
@@ -469,22 +609,51 @@ const confirmarCompra = async (idCompra: number) => {
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label className="form-label text-dark fw-semibold">{t('name')}</label>
-                  <input type="text" className="form-control" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                  <input type="text" 
+                  className="form-control"
+                  style={{
+                    borderRadius: '8px',
+                    border: '1px solid #ddd',
+                    padding: '10px'
+                  }}
+                  value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                 </div>
                 <div className="mb-3">
                   <label className="form-label text-dark fw-semibold">{t('last_name')}</label>
-                  <input type="text" className="form-control" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                  <input type="text" 
+                  className="form-control"
+                  style={{
+                    borderRadius: '8px',
+                    border: '1px solid #ddd',
+                    padding: '10px'
+                  }}
+                  value={lastName} onChange={(e) => setLastName(e.target.value)} />
                 </div>
                 <div className="mb-4">
                   <label className="form-label text-dark fw-semibold">{t('new_password')}</label>
                   <div className="input-group">
-                    <input type={showPassword ? 'text' : 'password'} className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t('new_password2')}/>
+                    <input type={showPassword ? 'text' : 'password'} 
+                    className="form-control"
+                    style={{
+                      borderRadius: '8px',
+                      border: '1px solid #ddd',
+                      padding: '10px'
+                    }}
+                    value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t('new_password2')}/>
                     <button type="button" className="btn btn-outline-secondary" onClick={() => setShowPassword(!showPassword)} tabIndex={-1}>
                       {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                   </div>
                 </div>
-                <button type="submit" className="btn btn-primary w-100 fw-bold">{t('save_changes')}</button>
+                <button type="submit" className="btn w-100 fw-bold"
+                  style={{
+                    backgroundColor: '#7a0c0c',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '10px',
+                    padding: '10px'
+                  }}>{t('save_changes')}
+                </button>
               </form>
               <div className="mb-3">
                 <label className="form-label text-dark fw-semibold">{t('language')}</label>
@@ -525,8 +694,8 @@ const confirmarCompra = async (idCompra: number) => {
             )}
             <h2 className="fw-bold mb-4" style={{ color: '#333' }}>{t('promo_management')}</h2>
             <div className="table-responsive">
-              <table className="table table-bordered align-middle">
-                <thead className="table-light">
+            <table className="table align-middle">
+                <thead style={{ backgroundColor: '#111111', color: '#ffffff' }}>
                   <tr>
                     <th>{t('name')}</th>
                     <th>{t('start')}</th>
@@ -571,7 +740,7 @@ const confirmarCompra = async (idCompra: number) => {
             </div>
 
             <div className="mt-4">
-              <h5>{editingPromoId ? t('edit_promo') : t('new_promo')}</h5>
+              <h5 className='text-black'>{editingPromoId ? t('edit_promo') : t('new_promo')}</h5>
               <div className="row g-3">
                 <div className="col-md-4">
                   <input type="text" className="form-control" placeholder={t('name')}
@@ -620,8 +789,8 @@ const confirmarCompra = async (idCompra: number) => {
             {user?.rol === 'Administrador' ? 'Historial de Compras' : 'Mi Historial de Compras'}
           </h2>
           <div className="table-responsive">
-            <table className="table table-bordered align-middle">
-              <thead className="table-light">
+          <table className="table align-middle">
+            <thead style={{ backgroundColor: '#111111', color: '#ffffff' }}>
               <tr>
                 <th>{t('client_name')}</th>
                 <th>{t('email')}</th> {/* 🔥 AÑADIDO */}
@@ -639,7 +808,13 @@ const confirmarCompra = async (idCompra: number) => {
                   <td>{sale.date || t('no_date')}</td>
                   <td>{sale.description || '—'}</td>
                   <td>
-                  <span className={`badge me-2 ${sale.status === 'EXITOSO' || sale.status === 'CONFIRMADA' ? 'bg-success' : 'bg-danger'}`}>
+                  <span className={`badge me-2`}
+                  style={{
+                    backgroundColor: sale.status === 'EXITOSO' || sale.status === 'CONFIRMADA'
+                      ? '#0f5132'
+                      : '#842029',
+                    color: '#fff'
+                  }}>
                     {sale.status || t('no_status')}
                   </span>
                   {user.rol === 'Administrador' && sale.status === 'PENDIENTE' && (
@@ -672,8 +847,8 @@ const confirmarCompra = async (idCompra: number) => {
       <p style={{ color: '#333' }}> {t('no_active_promos')}</p>
     ) : (
       <div className="table-responsive">
-        <table className="table table-bordered align-middle">
-          <thead className="table-light">
+        <table className="table align-middle">
+          <thead style={{ backgroundColor: '#111111', color: '#ffffff' }}>
             <tr>
               <th>{t('name')}</th>
               <th>{t('start')}</th>
@@ -729,6 +904,20 @@ const confirmarCompra = async (idCompra: number) => {
         >
           <p>{popupData.message}</p>
         </PopUpWindow>
+
+          <PopUpWindow
+            show={showPopup}
+            title={popupData.title}
+            onClose={() => setShowPopup(false)}
+            onConfirm={() => {
+              setShowPopup(false)
+              popupData.onConfirm?.()
+            }}
+          >
+            <p>{popupData.message}</p>
+          </PopUpWindow>
+
+        </div>
       </div>
     </div>
   </>
@@ -736,5 +925,7 @@ const confirmarCompra = async (idCompra: number) => {
 }
 
 export default UserManagement
+
+
 
 

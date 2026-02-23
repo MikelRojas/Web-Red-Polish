@@ -14,7 +14,7 @@ function Homepage() {
   const { t } = useTranslation('global');
 
   useEffect(() => {
-    document.body.style.backgroundColor = '#ffffff';
+    document.body.style.backgroundColor = '#0f0f0f';
     fetchProducts();
     fetchPromotions();
   }, []);
@@ -69,24 +69,50 @@ function Homepage() {
 
       {/* Sección de fondo */}
       <div
-        className="position-relative text-white d-flex justify-content-center align-items-center"
+        className="position-relative d-flex justify-content-center align-items-center text-center"
         style={{
-          height: '350px',
+          height: '420px',
           backgroundImage: `url(${image})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          fontFamily: "'Montserrat', 'Open Sans', Arial, sans-serif",
+          overflow: 'hidden'
         }}
       >
         <div
           className="position-absolute top-0 start-0 w-100 h-100"
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+          style={{
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.6))'
+          }}
         />
-        <div className="position-relative text-center px-3">
-          <h1 className="display-4 fw-light text-uppercase mb-3">RED POLISH</h1>
+
+        <div className="position-relative px-3">
+          <h1
+            className="fw-bold text-uppercase mb-3"
+            style={{
+              letterSpacing: '3px',
+              fontSize: '3rem',
+              color: '#ffffff'
+            }}
+          >
+            RED POLISH
+          </h1>
+
+          <div
+            style={{
+              width: '80px',
+              height: '3px',
+              backgroundColor: '#8B0000',
+              margin: '0 auto 20px auto'
+            }}
+          />
+
           <p
-            className="fs-5 fst-italic lh-lg"
-            style={{ maxWidth: '800px', margin: '0 auto' }}
+            style={{
+              maxWidth: '750px',
+              margin: '0 auto',
+              fontSize: '1.1rem',
+              color: '#d1d1d1'
+            }}
           >
             {t('slogan')}
           </p>
@@ -95,7 +121,15 @@ function Homepage() {
 
       <div className="container my-5">
         <div className="text-center mb-5">
-          <p className="fs-5 text-dark lh-lg">
+        <p
+          className="lh-lg"
+          style={{
+            fontSize: '1.05rem',
+            color: '#cfcfcf',
+            maxWidth: '850px',
+            margin: '0 auto'
+          }}
+        >
             {t('description_home')}
             <br />
             <br />
@@ -106,9 +140,23 @@ function Homepage() {
 
         {/* Carrusel real */}
         <div className="mb-5">
-          <h3 className="fw-semibold text-center mb-4 text-capitalize text-dark">
+        <h3
+          className="fw-bold text-center mb-4 text-uppercase"
+          style={{
+            letterSpacing: '2px',
+            color: '#ffffff'
+          }}
+        >
             {t('recommended_products')}
           </h3>
+          <div
+            style={{
+              width: '60px',
+              height: '3px',
+              backgroundColor: '#8B0000',
+              margin: '0 auto 30px auto'
+            }}
+          />
           <div className="d-flex align-items-center justify-content-between">
             <button className="btn btn-outline-dark me-2" onClick={prevSlide}>
               &lt;
@@ -123,12 +171,36 @@ function Homepage() {
                 return (
                   <div
                     key={product.id}
-                    className="card shadow-sm position-relative"
+                    className="card position-relative"
                     style={{
-                      minWidth: '200px',
-                      maxWidth: '200px',
-                      minHeight: '300px',
+                      width: '100%',
+                      maxWidth: '240px',
+                      minHeight: '350px',
+                      backgroundColor: '#1a1a1a',
+                      borderRadius: '16px',
                       cursor: 'pointer',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                  
+                      /* 🔥 NUEVO */
+                      border: '1px solid #2a2a2a',
+                      boxShadow: '0 10px 25px rgba(0,0,0,0.45)',
+                      transition: 'transform 0.35s ease, box-shadow 0.35s ease, border 0.35s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-6px)'
+                      e.currentTarget.style.boxShadow =
+                        '0 18px 35px rgba(0,0,0,0.55)'
+                      e.currentTarget.style.border =
+                        '1px solid rgba(139,0,0,0.4)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)'
+                      e.currentTarget.style.boxShadow =
+                        '0 8px 20px rgba(0,0,0,0.35)'
+                      e.currentTarget.style.border =
+                        '1px solid #2a2a2a'
                     }}
                     onClick={() => navigate(`/product/${product.id}`)}
                   >
@@ -138,37 +210,87 @@ function Homepage() {
                       </span>
                     )}
                     <div
-                      className="card-img-top bg-light d-flex justify-content-center align-items-center"
-                      style={{ height: '160px' }}
+                      style={{
+                        width: '100%',
+                        height: '190px',
+                        backgroundColor: '#111',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        padding: '15px',
+                        borderTopLeftRadius: '12px',
+                        borderTopRightRadius: '12px',
+                        borderBottom: '1px solid #222'
+                      }}
                     >
                       <img
                         src={product.image || image}
                         alt={product.name}
-                        className="img-fluid"
-                        style={{ maxHeight: '100%', objectFit: 'contain' }}
+                        style={{
+                          maxHeight: '100%',
+                          maxWidth: '100%',
+                          objectFit: 'contain'
+                        }}
                       />
                     </div>
-                    <div className="card-body">
-                      <h6 className="fw-bold card-title">{product.name}</h6>
-                      <p className="text-muted mb-1 small">{product.description}</p>
+                    <div
+                      className="card-body d-flex flex-column"
+                      style={{
+                        padding: '18px',
+                        color: '#f1f1f1'
+                      }}
+                    >
+                      <h6
+                        className="fw-semibold mb-2"
+                        style={{
+                          fontSize: '0.95rem',
+                          color: '#ffffff'
+                        }}
+                      >{product.name}</h6>
+                      <p
+                        className="mb-2"
+                        style={{
+                          fontSize: '0.8rem',
+                          color: '#a1a1a1',
+                          minHeight: '38px'
+                        }}
+                      >{product.description}</p>
                       {promo?.porcentage ? (
                         <div>
                           <span className="text-muted text-decoration-line-through me-2">
                             ${oldPrice?.toLocaleString()}
                           </span>
-                          <span className="fw-bold text-danger">
+                          <span
+                            className="fw-bold"
+                            style={{ color: '#8B0000' }}
+                          >
                             ${product.price.toLocaleString()}
                           </span>
                         </div>
                       ) : (
-                        <p className="mb-0 fw-bold">${product.price.toLocaleString()}</p>
+                        <p
+                          className="mb-0 fw-bold"
+                          style={{
+                            color: '#ffffff',
+                            fontSize: '0.95rem'
+                          }}
+                        >
+                          ${product.price.toLocaleString()}
+                        </p>
                       )}
                     </div>
                   </div>
                 );
               })}
             </div>
-            <button className="btn btn-outline-dark ms-2" onClick={nextSlide}>
+            <button 
+            className="btn"
+            style={{
+              backgroundColor: '#1a1a1a',
+              color: '#ffffff',
+              border: '1px solid #333',
+              transition: 'all 0.3s ease'
+            }} onClick={nextSlide}>
               &gt;
             </button>
           </div>
@@ -176,7 +298,13 @@ function Homepage() {
       </div>
 
       {/* Footer */}
-      <div className="bg-dark text-white py-5">
+      <div
+        style={{
+          backgroundColor: '#111',
+          borderTop: '1px solid #222'
+        }}
+        className="py-5"
+      >
         <div className="container">
           <h3 className="text-center fw-bold mb-4">{t('contact_us')}</h3>
           <div className="row row-cols-1 row-cols-md-2 g-4">
@@ -188,7 +316,7 @@ function Homepage() {
               </div>
             </div>
             <div className="d-flex align-items-start gap-3">
-              <FaWhatsapp className="fs-3 text-success" />
+              <FaWhatsapp className="fs-4" style={{ color: '#8B0000' }} />
               <div>
                 <p className="mb-1 fw-semibold">{t('Whatsapp')}</p>
                 <a href="https://wa.me/50683582929" className="text-white">
@@ -197,7 +325,7 @@ function Homepage() {
               </div>
             </div>
             <div className="d-flex align-items-start gap-3">
-              <FaEnvelope className="fs-3 text-primary" />
+              <FaEnvelope className="fs-4" style={{ color: '#8B0000' }} />
               <div>
                 <p className="mb-1 fw-semibold">{t('email')}</p>
                 <a href="mailto:agenda@redpolishcr.com" className="text-white">
@@ -206,7 +334,7 @@ function Homepage() {
               </div>
             </div>
             <div className="d-flex align-items-start gap-3">
-              <FaFacebook className="fs-3 text-info" />
+              <FaFacebook className="fs-4" style={{ color: '#8B0000' }}/>
               <div>
                 <p className="mb-1 fw-semibold">Facebook</p>
                 <a

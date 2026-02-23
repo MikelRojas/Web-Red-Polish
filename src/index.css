@@ -11,6 +11,61 @@ html, body, #root {
   width: 100%;
 }
 
+.navbar .nav-link {
+  position: relative;
+  font-weight: 500;
+}
+
+.navbar .nav-link:hover {
+  color: #8B0000 !important; /* rojo oscuro */
+}
+
+.navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #8B0000;
+  transition: width 0.3s ease;
+}
+
+.navbar .nav-link:hover::after {
+  width: 100%;
+}
+
+.navbar img:hover {
+  transform: scale(1.1);
+}
+
+.navbar-toggler {
+  border-color: #444;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-toggler-icon {
+  filter: invert(1);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.dropdown-item:hover {
+  background-color: #8B0000 !important;
+  color: white !important;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+}
+
 body {
   font-family: system-ui, sans-serif;
   background-color: #1f2937; /* gris oscuro o azul noche */

@@ -37,6 +37,20 @@
   padding: 2em;
 }
 
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+}
+
+.card {
+  overflow: hidden;
+}
+
+.btn:hover {
+  background-color: #8B0000 !important;
+  color: white !important;
+}
+
 .read-the-docs {
   color: #888;
 }

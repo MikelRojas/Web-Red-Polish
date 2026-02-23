@@ -20,11 +20,6 @@ const Login = () => {
     setModalInfo({ show: true, title, content, onConfirm });
   };
 
-
-  useEffect(() => {
-    document.body.style.backgroundColor = '#ffffff'
-  }, [])
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -54,90 +49,148 @@ const Login = () => {
       setEmail('');
       setPassword('');
     } catch (err) {
+      console.log(err)
       showAlert('Error', 'Contraseña o usuario incorrecto.');
     }
   };
 
   return (
-    <div className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-50" style={{ zIndex: 1000 }}>
-      <div className="bg-white rounded-4 shadow-lg p-5 w-100" style={{ maxWidth: '450px', boxShadow: '0px 8px 30px rgba(0, 0, 0, 0.1)' }}>
-        <h2 className="text-center mb-4 text-primary fw-bold" style={{ fontFamily: 'Poppins, sans-serif' }}>Iniciar Sesión</h2>
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#0f0f0f",
+        padding: "20px"
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: "#141414",
+          borderRadius: "22px",
+          border: "1px solid #2a2a2a",
+          padding: "45px 35px",
+          width: "100%",
+          maxWidth: "460px",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.6)"
+        }}
+      >
+        <h2
+          className="text-center mb-4 fw-bold"
+          style={{ letterSpacing: "1px" }}
+        >
+          Iniciar Sesión
+        </h2>
+  
         <form onSubmit={handleSubmit}>
+          {/* EMAIL */}
           <div className="mb-4">
-            <label htmlFor="email" className="form-label fw-medium" style={{ fontSize: '1.1rem', color: '#555' }}>Correo electrónico</label>
+            <label className="mb-2" style={{ color: "#b0b0b0" }}>
+              Correo electrónico
+            </label>
+  
             <input
-              id="email"
               type="email"
-              className="form-control border-0 shadow-sm"
-              placeholder="ejemplo@correo.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{ borderRadius: '20px', padding: '12px 16px', fontSize: '1rem', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', transition: 'all 0.3s' }}
+              placeholder="ejemplo@correo.com"
+              style={{
+                backgroundColor: "#1a1a1a",
+                border: "1px solid #333",
+                color: "#fff",
+                borderRadius: "10px",
+                padding: "12px 14px",
+                width: "100%"
+              }}
             />
           </div>
-
+  
+          {/* PASSWORD */}
           <div className="mb-4">
-            <label htmlFor="password" className="form-label fw-medium" style={{ fontSize: '1.1rem', color: '#555' }}>Contraseña</label>
+            <label className="mb-2" style={{ color: "#b0b0b0" }}>
+              Contraseña
+            </label>
+  
             <input
-              id="password"
               type="password"
-              className="form-control border-0 shadow-sm"
-              placeholder="********"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{ borderRadius: '20px', padding: '12px 16px', fontSize: '1rem', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', transition: 'all 0.3s' }}
+              placeholder="********"
+              style={{
+                backgroundColor: "#1a1a1a",
+                border: "1px solid #333",
+                color: "#fff",
+                borderRadius: "10px",
+                padding: "12px 14px",
+                width: "100%"
+              }}
             />
           </div>
-
-          <button type="submit" className="btn btn-gradient w-100 py-3 fw-bold" style={{
-            background: 'linear-gradient(to right, #007bff 0%, #3399ff 100%)',
-            borderRadius: '50px',
-            color: '#fff',
-            fontSize: '1.1rem',
-            transition: 'transform 0.2s ease-in-out',
-            boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.15)',
-            border: 'none'
-          }}>
+  
+          {/* BUTTON */}
+          <button
+            type="submit"
+            style={{
+              width: "100%",
+              padding: "12px",
+              borderRadius: "12px",
+              border: "none",
+              backgroundColor: "#8B0000",
+              color: "#fff",
+              fontWeight: 600,
+              transition: "0.3s ease",
+              boxShadow: "0 4px 15px rgba(139,0,0,0.4)"
+            }}
+          >
             Ingresar
           </button>
         </form>
-
-        <div className="mt-4 text-center">
-          <p className="text-dark" style={{ fontSize: '0.9rem' }}>
-            ¿No tienes una cuenta aún?{' '}
+  
+        {/* LINKS */}
+        <div className="text-center mt-4" style={{ fontSize: "0.9rem" }}>
+          <p style={{ color: "#b0b0b0" }}>
+            ¿No tienes una cuenta?{" "}
             <span
-              className="text-primary"
-              role="button"
-              style={{ cursor: 'pointer', textDecoration: 'underline', fontWeight: '500' }}
-              onClick={() => navigate('/register')}
+              onClick={() => navigate("/register")}
+              style={{
+                color: "#ffffff",
+                cursor: "pointer",
+                textDecoration: "underline"
+              }}
             >
               Regístrate aquí
             </span>
           </p>
-          <p className="text-dark" style={{ fontSize: '0.9rem' }}>
-            ¿Deseas volver al home?{' '}
+  
+          <p style={{ color: "#b0b0b0" }}>
+            ¿Olvidaste tu contraseña?{" "}
             <span
-              className="text-primary"
-              role="button"
-              style={{ cursor: 'pointer', textDecoration: 'underline', fontWeight: '500' }}
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/recover")}
+              style={{
+                color: "#ffffff",
+                cursor: "pointer",
+                textDecoration: "underline"
+              }}
             >
-              Ir al inicio
+              Recuperarla
             </span>
           </p>
-          <p className="text-dark" style={{ fontSize: '0.9rem' }}>
-            ¿Olvidaste tu contraseña?{' '}
+  
+          <p style={{ color: "#b0b0b0" }}>
+            ¿Volver al inicio?{" "}
             <span
-              className="text-primary"
-              role="button"
-              style={{ cursor: 'pointer', textDecoration: 'underline', fontWeight: '500' }}
-              onClick={() => navigate('/recover')}
+              onClick={() => navigate("/")}
+              style={{
+                color: "#ffffff",
+                cursor: "pointer",
+                textDecoration: "underline"
+              }}
             >
-              Recupera tu contraseña aquí
+              Ir al Home
             </span>
           </p>
         </div>
       </div>
+  
       {modalInfo.show && (
         <PopUpWindow
           show={modalInfo.show}

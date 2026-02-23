@@ -21,15 +21,19 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg bg-light" style={{ borderBottom: '2px solid #ccc' }}>
-      <div className="container">
-        <Link to="/" className="navbar-brand d-flex align-items-center fw-bold">
+    <nav className="navbar navbar-expand-lg navbar-dark shadow-sm"
+     style={{
+       backgroundColor: '#111',
+       borderBottom: '1px solid #2a2a2a'
+     }}>
+      <div className="container py-2">
+        <Link to="/" className="navbar-brand d-flex align-items-center fw-semibold text-white">
           <img
             src={logo}
             alt="Red Polish Logo"
-            style={{ width: '100px', height: '50px', marginRight: '10px' }}
+            style={{ width: '90px', height: '45px', marginRight: '12px', objectFit: 'contain' }}
           />
-          Red Polish
+          <span style={{ letterSpacing: '1px' }}>Red Polish</span>
         </Link>
 
         {user && user.rol !== 'Administrador' && (
@@ -44,12 +48,13 @@ const NavBar = () => {
 
         {/* Botón hamburguesa */}
         <button
-          className="navbar-toggler"
+          className="navbar-toggler border-0"
           type="button"
           onClick={toggleNavbar}
           aria-controls="navbarNav"
           aria-expanded={!isCollapsed}
           aria-label="Toggle navigation"
+          style={{ filter: 'invert(1)' }}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -57,10 +62,10 @@ const NavBar = () => {
         <div className={`collapse navbar-collapse ${!isCollapsed ? 'show' : ''}`} id="navbarNav">
           <ul className="navbar-nav me-auto align-items-center">
             <li className="nav-item">
-              <Link to="/catalog" className="nav-link">{t('products')}</Link>
+              <Link to="/catalog" className="nav-link text-light mx-2" style={{ transition: 'all 0.3s ease' }}>{t('products')}</Link>
             </li>
             <li className="nav-item">
-              <Link to="/services" className="nav-link">{t('services')}</Link>
+              <Link to="/services" className="nav-link text-light mx-2"style={{ transition: 'all 0.3s ease' }}>{t('services')}</Link>
             </li>
           </ul>
 
@@ -71,7 +76,12 @@ const NavBar = () => {
                   <img
                     src={carritoIcon}
                     alt="Carrito"
-                    style={{ width: '30px', height: '30px' }}
+                    style={{
+                      width: '28px',
+                      height: '28px',
+                      filter: 'invert(1)',
+                      transition: 'transform 0.2s ease'
+                    }}
                   />
                 </Link>
               </li>
@@ -79,19 +89,31 @@ const NavBar = () => {
             {!user ? (
               <>
                 <li className="nav-item">
-                  <Link to="/login" className="nav-link">{t('login')}</Link>
+                  <Link to="/login" className="nav-link text-light mx-2" style={{ transition: 'all 0.3s ease' }}>{t('login')}</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/register" className="nav-link">{t('register')}</Link>
+                  <Link to="/register" className="nav-link text-light mx-2" style={{ transition: 'all 0.3s ease' }}>{t('register')}</Link>
                 </li>
               </>
             ) : (
               <>
                 <li className="nav-item">
-                  <Link to="/user" className="nav-link">{t('user')}</Link>
+                  <Link to="/user" className="nav-link text-light mx-2" style={{ transition: 'all 0.3s ease' }}>{t('user')}</Link>
                 </li>
                 <li className="nav-item">
-                  <button className="nav-link btn" onClick={handleLogout}>{t('sign_out')}</button>
+                <button
+                  className="btn btn-sm ms-2"
+                  style={{
+                    backgroundColor: '#8B0000',
+                    color: 'white',
+                    borderRadius: '6px',
+                    padding: '6px 12px',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onClick={handleLogout}
+                >
+                  Cerrar sesion
+                </button>
                 </li>
               </>
             )}

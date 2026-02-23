@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react' 
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import NavBar from '../../common/NavBar'
 import { useAuth } from '../../common/AuthContext'
@@ -10,96 +10,76 @@ const EditProduct = () => {
   const [price, setPrice] = useState('')
   const [quantity, setQuantity] = useState('')
   const [categoryId, setCategoryId] = useState('')
-  const [promotionId, setPromotionId] = useState('') // NUEVO
+  const [promotionId, setPromotionId] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
   const [categories, setCategories] = useState<{ id: number, name: string }[]>([])
-  const [promotions, setPromotions] = useState<{
-    porcentage: number;
-    id: number, title: string }[]>([]) // NUEVO
+  const [promotions, setPromotions] = useState<{ porcentage: number; id: number, title: string }[]>([])
   const [showNewCategory, setShowNewCategory] = useState(false)
   const [newCategory, setNewCategory] = useState('')
   const { user, token } = useAuth()
-  const [originalPrice, setOriginalPrice] = useState<number | null>(null);
-  const { t } = useTranslation('global');
+  const [originalPrice, setOriginalPrice] = useState<number | null>(null)
+  const { t } = useTranslation('global')
 
   const apiUrl = import.meta.env.VITE_IP_API
   const navigate = useNavigate()
   const { id } = useParams()
 
   useEffect(() => {
-    document.body.style.backgroundColor = '#ffffff';
-  }, []);
+    document.body.style.backgroundColor = '#ffffff'
+  }, [])
 
-// Cargar promociones
   useEffect(() => {
     const fetchPromotions = async () => {
       try {
         const res = await fetch(`${apiUrl}/api/promotions`, {
-          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
           },
-        });
-        const data = await res.json();
-        setPromotions(data);
+        })
+        const data = await res.json()
+        setPromotions(data)
       } catch {
-        setPromotions([]);
+        setPromotions([])
       }
-    };
-    fetchPromotions();
-  }, [apiUrl, token]);
+    }
+    fetchPromotions()
+  }, [apiUrl, token])
 
-// Cargar producto cuando ya se tengan las promociones disponibles
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`${apiUrl}/api/products/get/${id}`);
-        const data = await res.json();
+        const res = await fetch(`${apiUrl}/api/products/get/${id}`)
+        const data = await res.json()
 
-        setName(data.name);
-        setDescription(data.description);
+        setName(data.name)
+        setDescription(data.description)
+        setQuantity(data.stock.toString())
+        setCategoryId(data.categoryId.toString())
+        setImageUrl(data.image)
 
-        const promotion = promotions.find(p => p.id === data.promotionId);
-        if (promotion?.porcentage) {
-          const precioOriginal = Math.round(data.price / (1 - promotion.porcentage / 100));
-          setOriginalPrice(precioOriginal);
-          setPrice(precioOriginal.toString());
-          setPromotionId(promotion.id.toString());
-        } else {
-          setOriginalPrice(data.price);
-          setPrice(data.price.toString());
+        if (data.promotionId) {
+          setPromotionId(data.promotionId.toString())
         }
 
-        setQuantity(data.stock.toString());
-        setCategoryId(data.categoryId.toString());
-        setImageUrl(data.image);
+        setOriginalPrice(data.price)
+        setPrice(data.price.toString())
       } catch {
-        setError(t('error_loading_product'));
+        setError(t('error_loading_product'))
       }
-    };
-
-    if (promotions.length > 0) {
-      fetchProduct();
     }
-  }, [apiUrl, id, promotions, t]);
 
-// Cargar categorías
+    fetchProduct()
+  }, [apiUrl, id, t])
+
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await fetch(`${apiUrl}/api/categories/get_categories`);
-        const data = await res.json();
-        setCategories(data);
-      } catch {
-        setCategories([]);
-      }
-    };
-    fetchCategories();
-  }, [apiUrl]);
-
+    fetch(`${apiUrl}/api/categories/get_categories`)
+      .then(res => res.json())
+      .then(data => setCategories(data))
+      .catch(() => setCategories([]))
+  }, [apiUrl])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -130,10 +110,10 @@ const EditProduct = () => {
         },
         body: JSON.stringify(productData)
       })
-      if (!res.ok) throw new Error('Error en la edición')
+      if (!res.ok) throw new Error()
       setSuccess(true)
       setTimeout(() => navigate('/catalog'), 3000)
-    } catch (err) {
+    } catch {
       setError(t('error_editing'))
     }
   }
@@ -146,8 +126,9 @@ const EditProduct = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: newCategory })
       })
-      const updated = await fetch(`${apiUrl}/api/categories/get_categories`).then(res => res.json())
-      setCategories(updated)
+      const updated = await fetch(`${apiUrl}/api/categories/get_categories`)
+      const data = await updated.json()
+      setCategories(data)
       setNewCategory('')
       setShowNewCategory(false)
     } catch {
@@ -155,126 +136,236 @@ const EditProduct = () => {
     }
   }
 
+  const inputStyle = {
+    backgroundColor: '#1a1a1a',
+    border: '1px solid #333',
+    color: '#fff',
+    borderRadius: '10px',
+    padding: '10px',
+    width: '100%'
+  }
+
+  const primaryButton = {
+    backgroundColor: '#8B0000',
+    border: 'none',
+    borderRadius: '12px',
+    padding: '12px',
+    width: '100%',
+    fontWeight: 600,
+    color: '#fff'
+  }
+
+  const secondaryButton = {
+    background: 'transparent',
+    border: '1px solid #333',
+    color: '#ccc',
+    borderRadius: '8px',
+    padding: '6px 15px'
+  }
+
   return (
-  <>
-    <NavBar />
-    <div className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-50" style={{ zIndex: 1000 }}>
-      <div className="bg-white rounded-4 shadow-lg p-5 w-100" style={{ maxWidth: '500px' }}>
-        <h2 className="text-center mb-4 text-dark fw-bold">{t('edit_product')}</h2>
+    <>
+      <NavBar />
 
-        {error && <div className="alert alert-danger py-2 mb-4">{error}</div>}
-        {success && <div className="alert alert-success py-2 mb-4">{t('success_edit')}</div>}
+      <div
+        className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center px-3"
+        style={{
+          background: 'rgba(0,0,0,0.75)',
+          backdropFilter: 'blur(4px)',
+          zIndex: 1000
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: '#141414',
+            borderRadius: '18px',
+            padding: 'clamp(20px, 5vw, 40px)',
+            width: '100%',
+            maxWidth: '520px',
+            border: '1px solid #2a2a2a',
+            boxShadow: '0 20px 50px rgba(0,0,0,0.6)'
+          }}
+        >
+          <h2 className="text-center mb-4 fw-bold" style={{ color: '#ffffff' }}>
+            {t('edit_product')}
+          </h2>
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label className="text-dark fw-bold">{t('name')}</label>
-            <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} required />
-          </div>
-
-          <div className="mb-3">
-            <label className="text-dark fw-bold">{t('description')}</label>
-            <input type="text" className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} required />
-          </div>
-
-          <div className="mb-3">
-            <label className="text-dark fw-bold">{t('price')}</label>
-            <input
-              type="number"
-              className="form-control"
-              placeholder={originalPrice !== null ? originalPrice.toString() : ''}
-              value={price}
-              onChange={e => setPrice(e.target.value)}
-              required
-            />
-          </div>
-
-
-          <div className="mb-3">
-            <label className="text-dark fw-bold">{t('quantity')}</label>
-            <input type="number" className="form-control" value={quantity} onChange={(e) => setQuantity(e.target.value)}
-                   required/>
-          </div>
-
-          <div className="mb-3">
-          <label className="text-dark fw-bold d-block">{t('category')}</label>
-            <div className="d-flex gap-2">
-              <select
-                className="form-select"
-                style={{ flex: 1 }}
-                value={categoryId}
-                onChange={(e) => setCategoryId(e.target.value)}
-                required
-              >
-                <option value="">{t('selectCategory')}</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>{cat.name}</option>
-                ))}
-              </select>
-              <button
-                type="button"
-                className="btn btn-primary btn-sm"
-                onClick={() => setShowNewCategory(!showNewCategory)}
-              >
-                {t('addCategory')}
-              </button>
+          {error && (
+            <div style={{
+              backgroundColor: '#1f1f1f',
+              color: '#ff6b6b',
+              padding: '10px',
+              borderRadius: '8px',
+              border: '1px solid #333',
+              marginBottom: '15px'
+            }}>
+              {error}
             </div>
+          )}
 
-            {showNewCategory && (
-              <div className="mt-2 d-flex gap-2">
+          {success && (
+            <div style={{
+              backgroundColor: '#1f1f1f',
+              color: '#4ade80',
+              padding: '10px',
+              borderRadius: '8px',
+              border: '1px solid #333',
+              marginBottom: '15px'
+            }}>
+              {t('success_edit')}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit}>
+
+            {[ 
+              { label: t('name'), value: name, setter: setName },
+              { label: t('description'), value: description, setter: setDescription }
+            ].map((field, index) => (
+              <div className="mb-3" key={index}>
+                <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                  {field.label}
+                </label>
                 <input
                   type="text"
-                  className="form-control"
-                  placeholder="Nueva categoría"
-                  value={newCategory}
-                  onChange={(e) => setNewCategory(e.target.value)}
+                  value={field.value}
+                  onChange={(e) => field.setter(e.target.value)}
+                  required
+                  style={inputStyle}
                 />
+              </div>
+            ))}
+
+            <div className="mb-3">
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('price')}
+              </label>
+              <input
+                type="number"
+                value={price}
+                placeholder={originalPrice !== null ? originalPrice.toString() : ''}
+                onChange={(e) => setPrice(e.target.value)}
+                required
+                style={inputStyle}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('quantity')}
+              </label>
+              <input
+                type="number"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                required
+                style={inputStyle}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('category')}
+              </label>
+
+              <div className="d-flex gap-2 flex-column flex-sm-row">
+                <select
+                  value={categoryId}
+                  onChange={(e) => setCategoryId(e.target.value)}
+                  required
+                  style={{ ...inputStyle, flex: 1 }}
+                >
+                  <option value="">{t('selectCategory')}</option>
+                  {categories.map(cat => (
+                    <option key={cat.id} value={cat.id}>{cat.name}</option>
+                  ))}
+                </select>
+
                 <button
                   type="button"
-                  className="btn btn-outline-primary"
-                  onClick={handleAddCategory}
+                  onClick={() => setShowNewCategory(!showNewCategory)}
+                  style={{
+                    backgroundColor: '#8B0000',
+                    border: 'none',
+                    color: '#fff',
+                    borderRadius: '10px',
+                    padding: '0 15px'
+                  }}
                 >
-                  {t('save')}
+                  +
                 </button>
               </div>
-            )}
+
+              {showNewCategory && (
+                <div className="mt-2 d-flex gap-2 flex-column flex-sm-row">
+                  <input
+                    type="text"
+                    value={newCategory}
+                    onChange={(e) => setNewCategory(e.target.value)}
+                    style={{ ...inputStyle, flex: 1 }}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddCategory}
+                    style={{
+                      backgroundColor: '#1f1f1f',
+                      border: '1px solid #333',
+                      color: '#fff',
+                      borderRadius: '10px',
+                      padding: '0 15px'
+                    }}
+                  >
+                    {t('save')}
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div className="mb-3">
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('promotion')}
+              </label>
+              <select
+                value={promotionId}
+                onChange={(e) => setPromotionId(e.target.value)}
+                style={inputStyle}
+              >
+                <option value="">{t('no_promotion')}</option>
+                {promotions.map(promo => (
+                  <option key={promo.id} value={promo.id.toString()}>
+                    {promo.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="mb-4">
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('imageUrl')}
+              </label>
+              <input
+                type="text"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                required
+                style={inputStyle}
+              />
+            </div>
+
+            <button type="submit" style={primaryButton}>
+              {t('save_changes')}
+            </button>
+          </form>
+
+          <div className="mt-3 text-center">
+            <button onClick={() => navigate('/catalog')} style={secondaryButton}>
+              {t('cancel_add')}
+            </button>
           </div>
-
-          <div className="mb-3">
-            <label className="text-dark fw-bold d-block">{t('promotion')}</label>
-            <select
-              className="form-select"
-              value={promotionId}
-              onChange={(e) => setPromotionId(e.target.value)}
-            >
-              <option value="">{t('no_promotion')}</option>
-              {promotions.map((promo) => (
-                <option key={promo.id} value={promo.id.toString()}>{promo.title}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="mb-4">
-            <label className="text-dark fw-bold">{t('imageUrl')}</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="https://..."
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-              required
-            />
-          </div>
-
-          <button type="submit" className="btn btn-primary w-100 fw-bold">{t('save_changes')}</button>
-        </form>
-
-        <div className="mt-3 text-center">
-          <button className="btn btn-outline-dark btn-sm" onClick={() => navigate('/catalog')}>{t('cancel_add')}</button>
         </div>
       </div>
-    </div>
-  </>
-)
+    </>
+  )
 }
 
 export default EditProduct

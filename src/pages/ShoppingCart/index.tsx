@@ -88,7 +88,6 @@ const ShoppingCart: React.FC = () => {
   };
 
   useEffect(() => {
-    document.body.style.backgroundColor = '#ffffff'
 
     const fetchCartAndProducts = async () => {
       if (!userId || !userEmail || !token) return;
@@ -164,96 +163,220 @@ const ShoppingCart: React.FC = () => {
   return (
     <>
       <NavBar />
-      <div className="container mt-5">
-        <h2 className="mb-4 text-center text-dark">🛒 {t('shopping')}</h2>
-
-        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-          {productos.map((producto) => {
-            const seleccionado = producto.id in seleccionados;
-            return (
-              <div className="col" key={producto.id}>
-                <div className={`card h-100 ${seleccionado ? 'border-dark' : ''}`}>
-                  <div className="card-body d-flex align-items-center">
-                    <img
-                      src={producto.image}
-                      alt={producto.name}
-                      className="me-3"
-                      style={{
-                        width: '60px',
-                        height: '60px',
-                        objectFit: 'cover',
-                        borderRadius: '10px',
-                      }}
-                    />
-                    <div style={{ flex: 1 }}>
-                      <h5 className="card-title mb-1">{producto.name}</h5>
-                        <p className="card-text mb-1 text-muted">{producto.description}</p>
-                        <p className="card-text mb-1 text-muted">${producto.price.toFixed(2)}</p>
-                      <input
-                        type="number"
-                        min="0"
-                        value={seleccionados[producto.id] ?? 0}
-                        onChange={(e) =>
-                          actualizarCantidad(producto.id, Number(e.target.value))
-                        }
-                        className="form-control form-control-sm mb-2"
-                        style={{ width: '80px' }}
+  
+      <div
+        className="container py-5"
+        style={{ color: "#ffffff" }}
+      >
+        <h2 className="text-center mb-5 fw-bold">
+          🛒 {t('shopping')}
+        </h2>
+  
+        {productos.length === 0 ? (
+          <div
+            style={{
+              backgroundColor: "#141414",
+              border: "1px solid #2a2a2a",
+              borderRadius: "16px",
+              padding: "40px",
+              textAlign: "center",
+              color: "#b0b0b0"
+            }}
+          >
+            {t('no_products')}
+          </div>
+        ) : (
+          <>
+            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+              {productos.map((producto) => (
+                <div className="col" key={producto.id}>
+                  <div
+                    style={{
+                      backgroundColor: "#141414",
+                      borderRadius: "18px",
+                      border: "1px solid #2a2a2a",
+                      padding: "20px",
+                      height: "100%",
+                      transition: "0.3s ease"
+                    }}
+                  >
+                    <div className="d-flex gap-3 align-items-start">
+                      <img
+                        src={producto.image}
+                        alt={producto.name}
+                        style={{
+                          width: "70px",
+                          height: "70px",
+                          objectFit: "cover",
+                          borderRadius: "12px"
+                        }}
                       />
-                      <button
-                        className="btn btn-outline-danger btn-sm"
-                        onClick={() => eliminarProductoDelCarrito(producto.cartItemId)}
-                      >
-                        {t('delete_p')}
-                      </button>
-
-                      <button
-                        className="btn btn-outline-primary btn-sm"
-                        onClick={() => actualizarProductoEnCarrito(producto.cartItemId, seleccionados[producto.id])}
-                        disabled={seleccionados[producto.id] === producto.quantity}
-                      >
-                        {t('save_changes')}
-                      </button>
+  
+                      <div style={{ flex: 1 }}>
+                        <h6 className="fw-bold mb-1">
+                          {producto.name}
+                        </h6>
+  
+                        <p
+                          style={{
+                            fontSize: "0.9rem",
+                            color: "#b0b0b0",
+                            marginBottom: "5px"
+                          }}
+                        >
+                          {producto.description}
+                        </p>
+  
+                        <p className="fw-bold mb-2">
+                          ${producto.price.toFixed(2)}
+                        </p>
+  
+                        <input
+                          type="number"
+                          min="0"
+                          value={seleccionados[producto.id] ?? 0}
+                          onChange={(e) =>
+                            actualizarCantidad(producto.id, Number(e.target.value))
+                          }
+                          style={{
+                            backgroundColor: "#1a1a1a",
+                            border: "1px solid #333",
+                            color: "#fff",
+                            borderRadius: "8px",
+                            padding: "6px",
+                            width: "80px",
+                            marginBottom: "10px"
+                          }}
+                        />
+  
+                        <div className="d-flex gap-2 flex-wrap">
+                          <button
+                            onClick={() =>
+                              eliminarProductoDelCarrito(producto.cartItemId)
+                            }
+                            style={{
+                              backgroundColor: "transparent",
+                              border: "1px solid #8B0000",
+                              color: "#ff4d4d",
+                              borderRadius: "8px",
+                              padding: "5px 10px",
+                              fontSize: "0.8rem"
+                            }}
+                          >
+                            {t('delete_p')}
+                          </button>
+  
+                          <button
+                            onClick={() =>
+                              actualizarProductoEnCarrito(
+                                producto.cartItemId,
+                                seleccionados[producto.id]
+                              )
+                            }
+                            disabled={
+                              seleccionados[producto.id] === producto.quantity
+                            }
+                            style={{
+                              backgroundColor: "#1f1f1f",
+                              border: "1px solid #333",
+                              color: "#fff",
+                              borderRadius: "8px",
+                              padding: "5px 10px",
+                              fontSize: "0.8rem",
+                              opacity:
+                                seleccionados[producto.id] === producto.quantity
+                                  ? 0.5
+                                  : 1
+                            }}
+                          >
+                            {t('save_changes')}
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="text-end fw-bold fs-5 mt-4 text-dark">
-          {t('total')}: ${totalSeleccionados.toFixed(2)}
-        </div>
-
-        <div className="text-center mt-4 d-flex justify-content-center gap-3">
-          <button
-            className="btn btn-danger"
-            onClick={vaciarCarrito}
-            disabled={Object.keys(seleccionados).length === 0}
-          >
-            {t('clear')}
-          </button>
-         <button
-        className="btn btn-success"
-        disabled={Object.keys(seleccionados).length === 0}
-        onClick={() =>
-          navigate('/pay-products', {
-            state: {
-              productosSeleccionados: productos.map(p => ({
-                id: p.id,
-                name: p.name,
-                price: p.price,
-                quantity: seleccionados[p.id],
-                image: p.image
-              })),
-              total: totalSeleccionados
-            }
-          })
-        }
-      >
-        {t('checkout')}
-      </button>
-        </div>
+              ))}
+            </div>
+  
+            {/* TOTAL */}
+            <div
+              className="mt-5 p-4 d-flex justify-content-between align-items-center"
+              style={{
+                backgroundColor: "#141414",
+                borderRadius: "18px",
+                border: "1px solid #2a2a2a"
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "1.2rem",
+                  color: "#b0b0b0"
+                }}
+              >
+                {t('total')}
+              </span>
+  
+              <span
+                style={{
+                  fontSize: "1.4rem",
+                  fontWeight: "bold"
+                }}
+              >
+                ${totalSeleccionados.toFixed(2)}
+              </span>
+            </div>
+  
+            {/* ACTION BUTTONS */}
+            <div className="text-center mt-4 d-flex justify-content-center gap-4 flex-wrap">
+              <button
+                onClick={vaciarCarrito}
+                disabled={Object.keys(seleccionados).length === 0}
+                style={{
+                  backgroundColor: "transparent",
+                  border: "1px solid #8B0000",
+                  color: "#ff4d4d",
+                  borderRadius: "10px",
+                  padding: "10px 25px",
+                  opacity:
+                    Object.keys(seleccionados).length === 0 ? 0.5 : 1
+                }}
+              >
+                {t('clear')}
+              </button>
+  
+              <button
+                disabled={Object.keys(seleccionados).length === 0}
+                onClick={() =>
+                  navigate('/pay-products', {
+                    state: {
+                      productosSeleccionados: productos.map(p => ({
+                        id: p.id,
+                        name: p.name,
+                        price: p.price,
+                        quantity: seleccionados[p.id],
+                        image: p.image
+                      })),
+                      total: totalSeleccionados
+                    }
+                  })
+                }
+                style={{
+                  backgroundColor: "#8B0000",
+                  border: "none",
+                  borderRadius: "10px",
+                  padding: "10px 30px",
+                  color: "#fff",
+                  fontWeight: 600,
+                  opacity:
+                    Object.keys(seleccionados).length === 0 ? 0.5 : 1
+                }}
+              >
+                {t('checkout')}
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

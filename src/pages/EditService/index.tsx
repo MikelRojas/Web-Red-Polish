@@ -39,8 +39,6 @@ const EditService = () => {
   };
 
   useEffect(() => {
-    document.body.style.backgroundColor = '#ffffff'
-
     if (!servicio) {
       setError(t('error_service_info'))
       return
@@ -198,64 +196,239 @@ const EditService = () => {
   return (
     <>
       <NavBar />
-      <div className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-50" style={{ zIndex: 1000 }}>
-        <div className="bg-white rounded-4 shadow-lg p-5 w-100" style={{ maxWidth: '500px' }}>
-          <h2 className="text-center mb-4 text-dark  fw-bold">{t('edit_service')}o</h2>
-
-          {error && <div className="alert alert-dark py-2 mb-4">{error}</div>}
-          {success && <div className="alert alert-success py-2 mb-4">{t('success_service_edit')}</div>}
-
+  
+      <div
+        className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center px-3"
+        style={{
+          background: 'rgba(0,0,0,0.75)',
+          backdropFilter: 'blur(4px)',
+          zIndex: 1000
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: '#141414',
+            borderRadius: '18px',
+            padding: 'clamp(20px, 5vw, 40px)',
+            width: '100%',
+            maxWidth: '600px',
+            border: '1px solid #2a2a2a',
+            boxShadow: '0 20px 50px rgba(0,0,0,0.6)'
+          }}
+        >
+          <h2 className="text-center mb-4 fw-bold" style={{ color: '#ffffff' }}>
+            {t('edit_service')}
+          </h2>
+  
+          {error && (
+            <div
+              style={{
+                backgroundColor: '#1f1f1f',
+                color: '#ff6b6b',
+                padding: '10px',
+                borderRadius: '8px',
+                border: '1px solid #333',
+                marginBottom: '15px',
+                textAlign: 'center'
+              }}
+            >
+              {error}
+            </div>
+          )}
+  
+          {success && (
+            <div
+              style={{
+                backgroundColor: '#1f1f1f',
+                color: '#4ade80',
+                padding: '10px',
+                borderRadius: '8px',
+                border: '1px solid #333',
+                marginBottom: '15px',
+                textAlign: 'center'
+              }}
+            >
+              {t('success_service_edit')}
+            </div>
+          )}
+  
           <form onSubmit={handleSubmit}>
+  
+            {/* Name */}
             <div className="mb-3">
-              <label className="text-dark fw-bold">{t('name')}</label>
-              <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} required />
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('name')}
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                style={{
+                  backgroundColor: '#1a1a1a',
+                  border: '1px solid #333',
+                  color: '#fff',
+                  borderRadius: '10px',
+                  padding: '10px',
+                  width: '100%'
+                }}
+              />
             </div>
-
+  
+            {/* Description */}
             <div className="mb-3">
-              <label className="text-dark fw-bold">{t('description')}</label>
-              <input type="text" className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} required />
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('description')}
+              </label>
+              <input
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+                style={{
+                  backgroundColor: '#1a1a1a',
+                  border: '1px solid #333',
+                  color: '#fff',
+                  borderRadius: '10px',
+                  padding: '10px',
+                  width: '100%'
+                }}
+              />
             </div>
-
+  
+            {/* Duration */}
             <div className="mb-3">
-              <label className="text-dark fw-bold">{t('duration')}</label>
-              <input type="text" className="form-control" value={duration} onChange={(e) => setDuration(e.target.value)} required />
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('duration')}
+              </label>
+              <input
+                type="text"
+                value={duration}
+                onChange={(e) => setDuration(e.target.value)}
+                required
+                style={{
+                  backgroundColor: '#1a1a1a',
+                  border: '1px solid #333',
+                  color: '#fff',
+                  borderRadius: '10px',
+                  padding: '10px',
+                  width: '100%'
+                }}
+              />
             </div>
-
+  
+            {/* Price */}
             <div className="mb-3">
-              <label className="text-dark fw-bold">{t('price')}</label>
-              <input type="number" className="form-control" value={originalPrice} onChange={(e) => setOriginalPrice(e.target.value)} required />
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('price')}
+              </label>
+              <input
+                type="number"
+                value={originalPrice}
+                onChange={(e) => setOriginalPrice(e.target.value)}
+                required
+                style={{
+                  backgroundColor: '#1a1a1a',
+                  border: '1px solid #333',
+                  color: '#fff',
+                  borderRadius: '10px',
+                  padding: '10px',
+                  width: '100%'
+                }}
+              />
             </div>
-
+  
+            {/* Category */}
             <div className="mb-3">
-              <label className="text-dark fw-bold d-block">{t('category')}</label>
-              <div className="d-flex gap-2">
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('category')}
+              </label>
+  
+              <div className="d-flex flex-column flex-md-row gap-2">
                 <select
-                  className="form-select"
-                  style={{ flex: 1 }}
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
                   required
+                  style={{
+                    backgroundColor: '#1a1a1a',
+                    border: '1px solid #333',
+                    color: '#fff',
+                    borderRadius: '10px',
+                    padding: '10px',
+                    flex: 1
+                  }}
                 >
                   <option value="">{t('selectCategory')}</option>
                   {categories.map((cat) => (
-                    <option key={cat.id} value={cat.id}>{cat.name}</option>
+                    <option key={cat.id} value={cat.id}>
+                      {cat.name}
+                    </option>
                   ))}
                 </select>
+  
                 <button
                   type="button"
-                  className="btn btn-primary btn-sm"
                   onClick={() => setShowNewCategory(!showNewCategory)}
+                  style={{
+                    backgroundColor: '#8B0000',
+                    border: 'none',
+                    color: '#fff',
+                    borderRadius: '10px',
+                    padding: '0 15px'
+                  }}
                 >
-                  {t('addCategory')}
+                  +
                 </button>
               </div>
-
-              <div className="mb-3">
-              <label className="text-dark fw-bold d-block">{t('promotion')}</label>
+  
+              {showNewCategory && (
+                <div className="mt-3 d-flex flex-column flex-md-row gap-2">
+                  <input
+                    type="text"
+                    value={newCategory}
+                    onChange={(e) => setNewCategory(e.target.value)}
+                    style={{
+                      backgroundColor: '#1a1a1a',
+                      border: '1px solid #333',
+                      color: '#fff',
+                      borderRadius: '10px',
+                      padding: '10px',
+                      flex: 1
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddCategory}
+                    style={{
+                      backgroundColor: '#1f1f1f',
+                      border: '1px solid #333',
+                      color: '#fff',
+                      borderRadius: '10px',
+                      padding: '0 15px'
+                    }}
+                  >
+                    {t('save')}
+                  </button>
+                </div>
+              )}
+            </div>
+  
+            {/* Promotion */}
+            <div className="mb-3">
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('promotion')}
+              </label>
               <select
-                className="form-select"
                 value={promotionId}
                 onChange={(e) => setPromotionId(e.target.value)}
+                style={{
+                  backgroundColor: '#1a1a1a',
+                  border: '1px solid #333',
+                  color: '#fff',
+                  borderRadius: '10px',
+                  padding: '10px',
+                  width: '100%'
+                }}
               >
                 <option value="">{t('no_promotion')}</option>
                 {promotions.map((promo) => (
@@ -265,47 +438,75 @@ const EditService = () => {
                 ))}
               </select>
             </div>
-
-              {showNewCategory && (
-                <div className="mt-2 d-flex gap-2">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Nueva categoría"
-                    value={newCategory}
-                    onChange={(e) => setNewCategory(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    className="btn btn-outline-dark"
-                    onClick={handleAddCategory}
-                  >
-                    {t('save')}
-                  </button>
-                </div>
-              )}
-            </div>
-
+  
+            {/* Image */}
             <div className="mb-4">
-              <label className="text-dark fw-bold">{t('imageUrl')}</label>
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('imageUrl')}
+              </label>
               <input
                 type="text"
-                className="form-control"
-                placeholder="https://..."
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
                 required
+                style={{
+                  backgroundColor: '#1a1a1a',
+                  border: '1px solid #333',
+                  color: '#fff',
+                  borderRadius: '10px',
+                  padding: '10px',
+                  width: '100%'
+                }}
               />
             </div>
-
-            <button type="submit" className="btn btn-primary w-100 fw-bold">{t('save_changes')}</button>
+  
+            {/* Submit */}
+            <button
+              type="submit"
+              style={{
+                backgroundColor: '#8B0000',
+                border: 'none',
+                borderRadius: '12px',
+                padding: '12px',
+                width: '100%',
+                fontWeight: 600,
+                color: '#fff'
+              }}
+            >
+              {t('save_changes')}
+            </button>
           </form>
-
-          <div className="mt-3 text-center d-flex justify-content-center gap-3">
-            <button className="btn btn-outline-dark btn-sm" onClick={() => navigate('/services')}>{t('cancel_add')}</button>
-            <button className="btn btn-outline-danger btn-sm" onClick={handleDeleteService}>{t('delete_service')}</button>
+  
+          {/* Bottom Buttons */}
+          <div className="mt-4 d-flex flex-column flex-md-row justify-content-center gap-3">
+            <button
+              onClick={() => navigate('/services')}
+              style={{
+                background: 'transparent',
+                border: '1px solid #333',
+                color: '#ccc',
+                borderRadius: '8px',
+                padding: '8px 20px'
+              }}
+            >
+              {t('cancel_add')}
+            </button>
+  
+            <button
+              onClick={handleDeleteService}
+              style={{
+                background: 'transparent',
+                border: '1px solid #8B0000',
+                color: '#ff4d4d',
+                borderRadius: '8px',
+                padding: '8px 20px'
+              }}
+            >
+              {t('delete_service')}
+            </button>
+          </div>
         </div>
-        </div>
+  
         {modalInfo.show && (
           <PopUpWindow
             show={modalInfo.show}

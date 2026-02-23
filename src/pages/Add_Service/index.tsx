@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import NavBar from '../../common/NavBar'
 import { useAuth } from '../../common/AuthContext'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 
 const AddService = () => {
   const { user, token } = useAuth()
@@ -15,27 +15,26 @@ const AddService = () => {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
   const [newCategory, setNewCategory] = useState('')
-  const apiUrl = import.meta.env.VITE_IP_API;
   const [showNewCategory, setShowNewCategory] = useState(false)
-  const [categories, setCategories] = useState([])
-  const { t } = useTranslation('global');
+  const [categories, setCategories] = useState<any[]>([])
+  const apiUrl = import.meta.env.VITE_IP_API
+  const navigate = useNavigate()
+  const { t } = useTranslation('global')
 
   useEffect(() => {
+
     const fetchCategories = async () => {
       try {
         const res = await fetch(`${apiUrl}/api/categories/get_categories`)
-        if (!res.ok) throw new Error('Error al obtener categorías')
         const data = await res.json()
         setCategories(data)
-      } catch (err) {
+      } catch {
         setError('No se pudieron cargar las categorías.')
       }
     }
 
     fetchCategories()
   }, [])
-
-  const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -51,7 +50,7 @@ const AddService = () => {
       description,
       duration,
       price: parseFloat(price),
-      imageUrl: imageUrl
+      imageUrl
     }
 
     try {
@@ -64,42 +63,38 @@ const AddService = () => {
         body: JSON.stringify(serviceData)
       })
 
-      if (!res.ok) throw new Error('Error en la petición')
+      if (!res.ok) throw new Error()
 
       setSuccess(true)
-      setTimeout(() => navigate('/services'), 3000)
-    } catch (err) {
-      console.error(err)
+      setTimeout(() => navigate('/services'), 2000)
+    } catch {
       setError(t('addServiceError'))
     }
   }
 
-
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
-    if (/^\d*\.?\d*$/.test(value)) {
-      setPrice(value)
-    }
+    if (/^\d*\.?\d*$/.test(value)) setPrice(value)
   }
 
   const handleDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
-    if (/^\d*$/.test(value)) {
-      setDuration(value)
-    }
+    if (/^\d*$/.test(value)) setDuration(value)
   }
 
   const handleAddCategory = async () => {
     if (!newCategory.trim()) return
     try {
-      const res = await fetch(`${apiUrl}/api/categories/create`, {
+      await fetch(`${apiUrl}/api/categories/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: newCategory })
       })
-      if (!res.ok) throw new Error('Error al crear categoría')
-      const updated = await fetch(`${apiUrl}/api/categories/get_categories`).then(res => res.json())
-      setCategories(updated)
+
+      const updated = await fetch(`${apiUrl}/api/categories/get_categories`)
+      const data = await updated.json()
+      setCategories(data)
+
       setNewCategory('')
       setShowNewCategory(false)
     } catch {
@@ -110,54 +105,171 @@ const AddService = () => {
   return (
     <>
       <NavBar />
-      <div className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-50" style={{ zIndex: 1000 }}>
-        <div className="bg-white rounded-4 shadow-lg p-5 w-100" style={{ maxWidth: '500px' }}>
-          <h2 className="text-center mb-4 text-dark fw-bold">{t('addServiceTitle')}</h2>
 
-          {error && <div className="alert alert-primary py-2 mb-4">{error}</div>}
-          {success && <div className="alert alert-success py-2 mb-4">{t('addServiceSuccess')}</div>}
+      <div
+        className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+        style={{
+          background: 'rgba(0,0,0,0.75)',
+          backdropFilter: 'blur(4px)',
+          zIndex: 1000
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: '#141414',
+            borderRadius: '18px',
+            padding: '40px',
+            width: '100%',
+            maxWidth: '520px',
+            border: '1px solid #2a2a2a',
+            boxShadow: '0 20px 50px rgba(0,0,0,0.6)'
+          }}
+        >
+          <h2
+            className="text-center mb-4 fw-bold"
+            style={{ color: '#ffffff' }}
+          >
+            {t('addServiceTitle')}
+          </h2>
+
+          {error && (
+            <div
+              className="mb-3 text-center"
+              style={{
+                backgroundColor: '#1f1f1f',
+                color: '#ff6b6b',
+                padding: '10px',
+                borderRadius: '8px',
+                border: '1px solid #333'
+              }}
+            >
+              {error}
+            </div>
+          )}
+
+          {success && (
+            <div
+              className="mb-3 text-center"
+              style={{
+                backgroundColor: '#1f1f1f',
+                color: '#4ade80',
+                padding: '10px',
+                borderRadius: '8px',
+                border: '1px solid #333'
+              }}
+            >
+              {t('addServiceSuccess')}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit}>
+
+            {/* Inputs */}
+            {[ 
+              { label: t('name'), value: name, setter: setName },
+              { label: t('description'), value: description, setter: setDescription }
+            ].map((field, index) => (
+              <div className="mb-3" key={index}>
+                <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                  {field.label}
+                </label>
+                <input
+                  type="text"
+                  value={field.value}
+                  onChange={(e) => field.setter(e.target.value)}
+                  required
+                  style={{
+                    backgroundColor: '#1a1a1a',
+                    border: '1px solid #333',
+                    color: '#fff',
+                    borderRadius: '10px',
+                    padding: '10px',
+                    width: '100%'
+                  }}
+                />
+              </div>
+            ))}
+
             <div className="mb-3">
-              <label className="text-dark fw-bold">{t('name')}</label>
-              <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} required />
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('price')}
+              </label>
+              <input
+                type="text"
+                value={price}
+                onChange={handlePriceChange}
+                required
+                style={{
+                  backgroundColor: '#1a1a1a',
+                  border: '1px solid #333',
+                  color: '#fff',
+                  borderRadius: '10px',
+                  padding: '10px',
+                  width: '100%'
+                }}
+              />
             </div>
 
             <div className="mb-3">
-              <label className="text-dark fw-bold">{t('description')}</label>
-              <input type="text" className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} required />
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('duration')} ({t('minutes')})
+              </label>
+              <input
+                type="text"
+                value={duration}
+                onChange={handleDurationChange}
+                required
+                style={{
+                  backgroundColor: '#1a1a1a',
+                  border: '1px solid #333',
+                  color: '#fff',
+                  borderRadius: '10px',
+                  padding: '10px',
+                  width: '100%'
+                }}
+              />
             </div>
 
+            {/* Category */}
             <div className="mb-3">
-              <label className="text-dark fw-bold">{t('price')}</label>
-              <input type="text" className="form-control" value={price} onChange={handlePriceChange} required />
-            </div>
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('category')}
+              </label>
 
-            <div className="mb-3">
-              <label className="text-dark fw-bold">{t('duration')} ({t('minutes')})</label>
-              <input type="text" className="form-control" value={duration} onChange={handleDurationChange} required />
-            </div>
-
-            <div className="mb-3">
-              <label className="text-dark fw-bold d-block">{t('category')}</label>
               <div className="d-flex gap-2">
                 <select
-                  className="form-select"
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
                   required
+                  style={{
+                    backgroundColor: '#1a1a1a',
+                    border: '1px solid #333',
+                    color: '#fff',
+                    borderRadius: '10px',
+                    padding: '10px',
+                    flex: 1
+                  }}
                 >
                   <option value="">{t('selectCategory')}</option>
                   {categories.map((cat: any) => (
-                    <option key={cat.id} value={cat.id}>{cat.name}</option>
+                    <option key={cat.id} value={cat.id}>
+                      {cat.name}
+                    </option>
                   ))}
                 </select>
+
                 <button
                   type="button"
-                  className="btn btn-primary btn-sm"
                   onClick={() => setShowNewCategory(!showNewCategory)}
+                  style={{
+                    backgroundColor: '#8B0000',
+                    border: 'none',
+                    color: '#fff',
+                    borderRadius: '10px',
+                    padding: '0 15px'
+                  }}
                 >
-                  {t('addCategory')}
+                  +
                 </button>
               </div>
 
@@ -165,15 +277,28 @@ const AddService = () => {
                 <div className="mt-2 d-flex gap-2">
                   <input
                     type="text"
-                    className="form-control"
-                    placeholder="Nueva categoría"
                     value={newCategory}
                     onChange={(e) => setNewCategory(e.target.value)}
+                    placeholder="Nueva categoría"
+                    style={{
+                      backgroundColor: '#1a1a1a',
+                      border: '1px solid #333',
+                      color: '#fff',
+                      borderRadius: '10px',
+                      padding: '10px',
+                      flex: 1
+                    }}
                   />
                   <button
                     type="button"
-                    className="btn btn-outline-primary"
                     onClick={handleAddCategory}
+                    style={{
+                      backgroundColor: '#1f1f1f',
+                      border: '1px solid #333',
+                      color: '#fff',
+                      borderRadius: '10px',
+                      padding: '0 15px'
+                    }}
                   >
                     {t('save')}
                   </button>
@@ -182,22 +307,56 @@ const AddService = () => {
             </div>
 
             <div className="mb-4">
-              <label className="text-dark fw-bold">{t('imageUrl')}</label>
+              <label style={{ color: '#e5e5e5', fontWeight: 600 }}>
+                {t('imageUrl')}
+              </label>
               <input
                 type="text"
-                className="form-control"
                 placeholder="https://..."
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
                 required
+                style={{
+                  backgroundColor: '#1a1a1a',
+                  border: '1px solid #333',
+                  color: '#fff',
+                  borderRadius: '10px',
+                  padding: '10px',
+                  width: '100%'
+                }}
               />
             </div>
 
-            <button type="submit" className="btn btn-primary w-100 fw-bold">{t('addServiceTitle')}</button>
+            <button
+              type="submit"
+              style={{
+                backgroundColor: '#8B0000',
+                border: 'none',
+                borderRadius: '12px',
+                padding: '12px',
+                width: '100%',
+                fontWeight: 600,
+                color: '#fff',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              {t('addServiceTitle')}
+            </button>
           </form>
 
           <div className="mt-3 text-center">
-            <button className="btn btn-outline-dark btn-sm" onClick={() => navigate('/services')}>{t('cancel_add')}</button>
+            <button
+              onClick={() => navigate('/services')}
+              style={{
+                background: 'transparent',
+                border: '1px solid #333',
+                color: '#ccc',
+                borderRadius: '8px',
+                padding: '6px 15px'
+              }}
+            >
+              {t('cancel_add')}
+            </button>
           </div>
         </div>
       </div>

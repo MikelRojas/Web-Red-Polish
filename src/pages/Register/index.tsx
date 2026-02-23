@@ -94,6 +94,7 @@ const Register = () => {
         navigate('/')
       }, 3000)
     } catch (err) {
+      console.log(err)
       setError('Error de conexión con el servidor.')
     }
     finally {
@@ -102,182 +103,241 @@ const Register = () => {
   }
 
   return (
-    <div className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-50" style={{ zIndex: 1000 }}>
-      <div className="bg-white rounded-4 shadow-lg p-5 w-100" style={{ maxWidth: '450px', boxShadow: '0px 8px 30px rgba(0, 0, 0, 0.1)', overflowY: 'auto', maxHeight: '90vh' }}>
-        <h2 className="text-center mb-4 text-primary fw-bold" style={{ fontFamily: 'Poppins, sans-serif' }}>
-          Bienvenido al Registro de Red Polish
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#0f0f0f",
+        padding: "20px"
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: "#141414",
+          borderRadius: "22px",
+          border: "1px solid #2a2a2a",
+          padding: "45px 35px",
+          width: "100%",
+          maxWidth: "460px",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.6)"
+        }}
+      >
+        <h2
+          className="text-center mb-4 fw-bold"
+          style={{ letterSpacing: "1px" }}
+        >
+          Crear Cuenta
         </h2>
+  
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="firstName" className="form-label fw-medium" style={{ fontSize: '1.1rem', color: '#555' }}>
-              Escriba su nombre
+          {/* FIRST NAME */}
+          <div className="mb-3">
+            <label className="mb-2" style={{ color: "#b0b0b0" }}>
+              Nombre
             </label>
             <input
-              id="firstName"
               type="text"
-              className="form-control border-0 shadow-sm"
-              placeholder="Nombre"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               style={{
-                borderRadius: '20px',
-                padding: '12px 16px',
-                fontSize: '1rem',
-                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-                transition: 'all 0.3s',
+                backgroundColor: "#1a1a1a",
+                border: "1px solid #333",
+                color: "#fff",
+                borderRadius: "10px",
+                padding: "10px 14px",
+                width: "100%"
               }}
             />
           </div>
-
-          <div className="mb-4">
-            <label htmlFor="lastName" className="form-label fw-medium" style={{ fontSize: '1.1rem', color: '#555' }}>
-              Escriba sus apellidos
+  
+          {/* LAST NAME */}
+          <div className="mb-3">
+            <label className="mb-2" style={{ color: "#b0b0b0" }}>
+              Apellidos
             </label>
             <input
-              id="lastName"
               type="text"
-              className="form-control border-0 shadow-sm"
-              placeholder="Apellidos"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               style={{
-                borderRadius: '20px',
-                padding: '12px 16px',
-                fontSize: '1rem',
-                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-                transition: 'all 0.3s',
+                backgroundColor: "#1a1a1a",
+                border: "1px solid #333",
+                color: "#fff",
+                borderRadius: "10px",
+                padding: "10px 14px",
+                width: "100%"
               }}
             />
           </div>
-
-          <div className="mb-4">
-            <label htmlFor="email" className="form-label fw-medium" style={{ fontSize: '1.1rem', color: '#555' }}>
-              Correo electrónico
+  
+          {/* EMAIL */}
+          <div className="mb-3">
+            <label className="mb-2" style={{ color: "#b0b0b0" }}>
+              Correo Electrónico
             </label>
             <input
-              id="email"
               type="email"
-              className="form-control border-0 shadow-sm"
-              placeholder="ejemplo@correo.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               style={{
-                borderRadius: '20px',
-                padding: '12px 16px',
-                fontSize: '1rem',
-                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-                transition: 'all 0.3s',
+                backgroundColor: "#1a1a1a",
+                border: "1px solid #333",
+                color: "#fff",
+                borderRadius: "10px",
+                padding: "10px 14px",
+                width: "100%"
               }}
             />
           </div>
-
-                    <div className="mb-4">
-            <label htmlFor="password" className="form-label fw-medium" style={{ fontSize: '1.1rem', color: '#555' }}>
-              Contraseña(Mínimo 8 caracteres)
+  
+          {/* PASSWORD */}
+          <div className="mb-3">
+            <label className="mb-2" style={{ color: "#b0b0b0" }}>
+              Contraseña (mínimo 8 caracteres)
             </label>
-            <div className="position-relative">
+  
+            <div style={{ position: "relative" }}>
               <input
-                id="password"
-                type={showPassword ? 'text' : 'password'}
-                className="form-control border-0 shadow-sm"
-                placeholder="********"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 style={{
-                  borderRadius: '20px',
-                  padding: '12px 16px',
-                  fontSize: '1rem',
-                  boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-                  transition: 'all 0.3s',
+                  backgroundColor: "#1a1a1a",
+                  border: "1px solid #333",
+                  color: "#fff",
+                  borderRadius: "10px",
+                  padding: "10px 14px",
+                  width: "100%"
                 }}
               />
+  
               <span
-                className="position-absolute top-50 end-0 translate-middle-y me-3"
-                role="button"
                 onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "12px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  cursor: "pointer",
+                  color: "#999"
+                }}
               >
-                {showPassword ? <EyeOff size={20} color="black" /> : <Eye size={20} color="black" />}
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </span>
             </div>
           </div>
+  
+          {/* CONFIRM PASSWORD */}
           <div className="mb-4">
-            <label htmlFor="confirmPassword" className="form-label fw-medium" style={{ fontSize: '1.1rem', color: '#555' }}>
+            <label className="mb-2" style={{ color: "#b0b0b0" }}>
               Confirmar Contraseña
             </label>
-            <div className="position-relative">
+  
+            <div style={{ position: "relative" }}>
               <input
-                id="confirmPassword"
-                type={showConfirmPassword ? 'text' : 'password'}
-                className="form-control border-0 shadow-sm"
-                placeholder="********"
+                type={showConfirmPassword ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 style={{
-                  borderRadius: '20px',
-                  padding: '12px 16px',
-                  fontSize: '1rem',
-                  boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-                  transition: 'all 0.3s',
+                  backgroundColor: "#1a1a1a",
+                  border: "1px solid #333",
+                  color: "#fff",
+                  borderRadius: "10px",
+                  padding: "10px 14px",
+                  width: "100%"
                 }}
               />
+  
               <span
-                className="position-absolute top-50 end-0 translate-middle-y me-3"
-                role="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                onClick={() =>
+                  setShowConfirmPassword(!showConfirmPassword)
+                }
+                style={{
+                  position: "absolute",
+                  right: "12px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  cursor: "pointer",
+                  color: "#999"
+                }}
               >
-                {showConfirmPassword ? <EyeOff size={20} color="black" /> : <Eye size={20} color="black" />}
+                {showConfirmPassword ? (
+                  <EyeOff size={18} />
+                ) : (
+                  <Eye size={18} />
+                )}
               </span>
             </div>
           </div>
+  
+          {/* ERROR */}
           {error && (
-            <div className="alert alert-primary py-2 mb-4">
+            <div
+              style={{
+                backgroundColor: "#1a1a1a",
+                border: "1px solid #8B0000",
+                color: "#ff4d4d",
+                padding: "10px",
+                borderRadius: "10px",
+                marginBottom: "15px",
+                fontSize: "0.9rem"
+              }}
+            >
               {error}
             </div>
           )}
-              <button
-                type="submit"
-                className="btn w-100 py-3 fw-bold"
-                style={{
-                  background: 'linear-gradient(to right, #007bff 0%, #3399ff 100%)',
-                  borderRadius: '50px',
-                  color: '#fff',
-                  fontSize: '1.1rem',
-                  transition: 'transform 0.2s ease-in-out',
-                  boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.15)',
-                  border: 'none'
-                }}
-              >
-                Registrar
-              </button>
+  
+          {/* BUTTON */}
+          <button
+            type="submit"
+            style={{
+              width: "100%",
+              padding: "12px",
+              borderRadius: "12px",
+              border: "none",
+              backgroundColor: "#8B0000",
+              color: "#fff",
+              fontWeight: 600,
+              transition: "0.3s ease"
+            }}
+          >
+            Registrarse
+          </button>
         </form>
-
-        <div className="mt-4 text-center">
-          <p className="text-dark" style={{ fontSize: '0.9rem' }}>
-            ¿Ya tienes una cuenta?{' '}
+  
+        {/* LINKS */}
+        <div className="text-center mt-4" style={{ fontSize: "0.9rem" }}>
+          <p style={{ color: "#b0b0b0" }}>
+            ¿Ya tienes cuenta?{" "}
             <span
-              className="text-primary"
-              role="button"
-              style={{ cursor: 'pointer', textDecoration: 'underline', fontWeight: '500' }}
-              onClick={() => navigate('/login')}
+              onClick={() => navigate("/login")}
+              style={{
+                color: "#ffffff",
+                cursor: "pointer",
+                textDecoration: "underline"
+              }}
             >
-              Inicia sesión aquí
+              Inicia sesión
             </span>
           </p>
-          <p className="text-dark" style={{ fontSize: '0.9rem' }}>
-            ¿Deseas volver al home?{' '}
+  
+          <p style={{ color: "#b0b0b0" }}>
+            ¿Volver al inicio?{" "}
             <span
-              className="text-primary"
-              role="button"
-              style={{ cursor: 'pointer', textDecoration: 'underline', fontWeight: '500' }}
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/")}
+              style={{
+                color: "#ffffff",
+                cursor: "pointer",
+                textDecoration: "underline"
+              }}
             >
-              Ir al inicio
+              Ir al Home
             </span>
           </p>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Register
