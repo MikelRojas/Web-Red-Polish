@@ -132,11 +132,15 @@ Este módulo transforma el sistema en una <strong>plataforma híbrida producto +
 <p align="center">
   <img src="public/readme/service_user.png" height="320"/>
   <img src="public/readme/service_view.png" height="320"/>
+</p>
+
+<p align="center">>
   <img src="public/readme/pay_service.png" height="320"/>
+  <img src="public/readme/service_admin.png" height="320"/>
 </p>
 
 <p align="center">
-  <img src="public/readme/service_admin.png" height="320"/>
+  
   <img src="public/readme/add_service.png" height="320"/>
   <img src="public/readme/edit_service.png" height="320"/>
   <img src="public/readme/modify_calendar.png" height="320"/>
