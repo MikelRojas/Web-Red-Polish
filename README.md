@@ -100,14 +100,14 @@ Sistema completo de comercio electrónico:
 <br/>
 
 <p align="center">
-  <img src="public/readme/product_user.png" height="220"/>
-  <img src="public/readme/product_view.png" height="220"/>
-  <img src="public/readme/product_admin.png" height="220"/>
+  <img src="public/readme/product_user.png" height="260"/>
+  <img src="public/readme/product_view.png" height="260"/>
+  <img src="public/readme/product_admin.png" height="260"/>
 </p>
 
 <p align="center">
-  <img src="public/readme/add_product.png" height="220"/>
-  <img src="public/readme/edit_product.png" height="220"/>
+  <img src="public/readme/add_product.png" height="260"/>
+  <img src="public/readme/edit_product.png" height="260"/>
 </p>
 
 ---
@@ -130,16 +130,16 @@ Este módulo transforma el sistema en una <strong>plataforma híbrida producto +
 <br/>
 
 <p align="center">
-  <img src="public/readme/service_user.png" height="220"/>
-  <img src="public/readme/service_view.png" height="220"/>
-  <img src="public/readme/pay_service.png" height="220"/>
+  <img src="public/readme/service_user.png" height="260"/>
+  <img src="public/readme/service_view.png" height="260"/>
+  <img src="public/readme/pay_service.png" height="260"/>
 </p>
 
 <p align="center">
-  <img src="public/readme/service_admin.png" height="220"/>
-  <img src="public/readme/add_service.png" height="220"/>
-  <img src="public/readme/edit_service.png" height="220"/>
-  <img src="public/readme/modify_calendar.png" height="220"/>
+  <img src="public/readme/service_admin.png" height="260"/>
+  <img src="public/readme/add_service.png" height="260"/>
+  <img src="public/readme/edit_service.png" height="260"/>
+  <img src="public/readme/modify_calendar.png" height="260"/>
 </p>
 
 
@@ -162,7 +162,7 @@ Garantiza continuidad de compra y consistencia de datos entre sesiones.
 <br/>
 
 <p align="center">
-  <img src="public/readme/cart.png" height="220"/>
+  <img src="public/readme/cart.png" height="260"/>
 </p>
 
 ---
@@ -183,8 +183,8 @@ Diseñado para escalar hacia un sistema multi-gateway sin refactorizaciones crí
 <br/>
 
 <p align="center">
-  <img src="public/readme/pay_product.png" height="220"/>
-  <img src="public/readme/confirmation_pay.png" height="220"/>
+  <img src="public/readme/pay_product.png" height="260"/>
+  <img src="public/readme/confirmation_pay.png" height="260"/>
   <img src="public/readme/whats.png" height="60"/>
 </p>
 
@@ -197,7 +197,7 @@ Panel centralizado de gestión de usuario con arquitectura basada en roles y con
 El módulo permite a cada usuario administrar su información, historial y preferencias desde un entorno seguro y segmentado.
 
 <p align="center">
-  <img src="public/readme/user_management.png" height="220"/>
+  <img src="public/readme/user_management.png" height="260"/>
 </p>
 
 ---
@@ -215,7 +215,7 @@ Diseñado bajo principio de **seguridad primero**, evitando inconsistencias de e
 <br/>
 
 <p align="center">
-  <img src="public/readme/gestion_usuario.png" height="220"/>
+  <img src="public/readme/gestion_usuario.png" height="260"/>
 </p>
 
 
@@ -232,8 +232,8 @@ Implementado con renderizado condicional por rol.
 <br/>
 
 <p align="center">
-  <img src="public/readme/citas_user.png" height="220"/>
-  <img src="public/readme/citas_management.png" height="220"/>
+  <img src="public/readme/citas_user.png" height="260"/>
+  <img src="public/readme/citas_management.png" height="260"/>
 </p>
 
 ---
@@ -253,7 +253,7 @@ Sistema preparado para escalar hacia campañas automatizadas.
 <br/>
 
 <p align="center">
-  <img src="public/readme/promos.png" height="220"/>
+  <img src="public/readme/promos.png" height="260"/>
 </p>
 
 ---
@@ -273,8 +273,8 @@ Permite control financiero básico sin requerir dashboard externo.
 <br/>
 
 <p align="center">
-  <img src="public/readme/history_buys_user.png" height="220"/>
-  <img src="public/readme/history_buys.png" height="220"/>
+  <img src="public/readme/history_buys_user.png" height="260"/>
+  <img src="public/readme/history_buys.png" height="260"/>
 </p>
 
 ---
