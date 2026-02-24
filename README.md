@@ -19,9 +19,15 @@
   <img src="https://img.shields.io/badge/Architecture-Clean%20Architecture-red?style=for-the-badge"/>
 </p>
 
+<p align="center">
+  <a href="https://github.com/MikelRojas/Red-Polish-backend" target="_blank">
+    <img src="https://img.shields.io/badge/🔗%20Ver%20Repositorio%20Backend-Spring%20Boot-6DB33F?style=for-the-badge&logo=spring&logoColor=white"/>
+  </a>
+</p>
+
 ---
 
-# 🧠 Executive Overview
+# 🧠 Overview
 
 Red Polish es una plataforma digital híbrida que combina:
 
